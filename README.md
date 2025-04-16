@@ -91,13 +91,14 @@ applications, such as installers, rescue disks or interactive scripts. It suppor
       and [`height=50%`][box-common-options-height] options to dynamically scale with the terminal!
 <!-- }}} -->
 
-# Demo
+## Demo<!-- {{{ -->
 Try the [`demo/main.sh`](./demo/main.sh) script to explore all available box/widget types.
 You can also run each example individually from the [`demo/`](./demo) directory if you want.
 To force Whiptail as renderer, pass `1` as the first argument:
 ```bash
 ./demo/main.sh 1 # or bash demo/menu.sh 1
 ```
+<!-- }}} -->
 
 ## Example<!-- {{{ -->
 Example of a menu box created with Whiptail and with boxlib.

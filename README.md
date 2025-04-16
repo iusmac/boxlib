@@ -94,10 +94,12 @@ applications, such as installers, rescue disks or interactive scripts. It suppor
 ## Demo<!-- {{{ -->
 Try the [`demo/main.sh`](./demo/main.sh) script to explore all available box/widget types.
 You can also run each example individually from the [`demo/`](./demo) directory if you want.
-To force Whiptail as renderer, pass `1` as the first argument:
-```bash
-./demo/main.sh 1 # or bash demo/menu.sh 1
-```
+> [!TIP]
+> Since Dialog is the preferred renderer, you can force Whiptail by setting the
+> [`BOXLIB_USE_WHIPTAIL=1`][global-vars-use-whiptail] environment variable:
+> ```bash
+> BOXLIB_USE_WHIPTAIL=1 ./demo/main.sh 1 # or BOXLIB_USE_WHIPTAIL=1 bash demo/menu.sh
+> ```
 <!-- }}} -->
 
 ## Example<!-- {{{ -->
@@ -1128,6 +1130,16 @@ declare -p dummy # => declare -x dummy="1"
 <!-- Communication between boxes }}} -->
 
 # Global variables<!-- {{{ -->
+<details><summary><code id="global-vars-use-whiptail">$BOXLIB_USE_WHIPTAIL=1</code></summary><blockquote>
+
+This environment variable, when set to `1`, will force Whiptail as renderer.
+The [rendererPath][config-options-renderer_path]/[rendererName][config-options-renderer_name] options
+will still take precedence, though. Example usage:
+> ```bash
+> BOXLIB_USE_WHIPTAIL=1 ./my_app/main.sh 1 # or BOXLIB_USE_WHIPTAIL=1 bash ./my_app/main.sh
+> ```
+</blockquote></details>
+
 <details><summary><code>$BOXLIB_LOADED</code></summary><blockquote>
 
 This read-only variable is set after the library has been loaded (sourced). Example usage:
@@ -1278,5 +1290,6 @@ Usage:
 [timepicker-options-second]: #user-content-timepicker-options-second
 [timepicker-options-time_format]: #user-content-timepicker-options-time_format
 [timepicker-options-force_input_box]: #user-content-timepicker-options-force_input_box
+[global-vars-use-whiptail]: #user-content-global-vars-use-whiptail
 <!-- }}}
 vim: set fdm=marker: -->

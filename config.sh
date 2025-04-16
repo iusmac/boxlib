@@ -102,7 +102,7 @@ function __config_init() { # {{{
         ['debug']='/dev/null'
     )
     # Fallback to whiptail when cannot use dialog
-    if ! which 'dialog' &>/dev/null; then
+    if [ "${BOXLIB_USE_WHIPTAIL:-0}" = '1' ] || ! which 'dialog' &>/dev/null; then
         if which 'whiptail' &>/dev/null; then
             __CONFIG['rendererBinary']='whiptail'
             __CONFIG['rendererName']='whiptail'

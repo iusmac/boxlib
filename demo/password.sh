@@ -3,9 +3,6 @@
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$ROOT"/../core.sh
 
-# Force Whiptail as renderer
-[ "${1:-}" = '1' ] && config rendererName='whiptail' rendererPath='whiptail'
-
 function input_handler()  {
     # Capture the status code from the input box
     local status=$?

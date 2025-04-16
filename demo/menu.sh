@@ -3,9 +3,6 @@
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$ROOT"/../core.sh
 
-# Force Whiptail as renderer
-[ "${1:-}" = '1' ] && config rendererName='whiptail' rendererPath='whiptail'
-
 function start_menu() {
     # NOTE: this menu loop is handcrafted rather then using the builtin loop=true option. This
     # ensures that each new loop cycle will re-renderer the entries summary that display the

@@ -3,9 +3,6 @@
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$ROOT"/../core.sh
 
-# Force Whiptail as renderer
-[ "${1:-}" = '1' ] && config rendererName='whiptail' rendererPath='whiptail'
-
 {
     echo 1+2=$((1+2)); sleep .3
     echo 'Example message printed to stderr' >&2; sleep .3

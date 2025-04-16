@@ -3,9 +3,6 @@
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$ROOT"/../core.sh
 
-# Force Whiptail as renderer
-[ "${1:-}" = '1' ] && config rendererName='whiptail' rendererPath='whiptail'
-
 file="$(mktemp)" || exit $?
 
 # Simulate a program working in the background and writing logs to file

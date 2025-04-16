@@ -199,8 +199,18 @@ function menuDraw() { # {{{
 
         __box_draw "$l_menu_height" "${__MENU_ENTRIES[@]}"; l_rc=$?
 
+        # Ensure we respect the DIALOG_* exit status codes variables
+        local -i l_renderer_code=${__MENU['renderer-code']?}
+        if ! config isDialogRenderer >/dev/null; then
+            __whiptail_to_dialog_code $l_renderer_code; l_renderer_code=$?
+        fi
+
         # Prevent the menu box from looping, if needed
-        if [ "${__MENU['renderer-code']?}" -gt 0 ] || [ "${__MENU['loop']?}" != 'true' ]; then
+        if [ $l_renderer_code -ne "${DIALOG_EXTRA:-3}" ] &&
+            [ $l_renderer_code -ne "${DIALOG_HELP:-2}" ] &&
+            [ $l_renderer_code -ne "${DIALOG_OK:-0}" ] &&
+            [ $l_renderer_code -ne "${DIALOG_ITEM_HELP:-4}" ] ||
+            [ "${__MENU['loop']?}" != 'true' ]; then
             break
         fi
     done

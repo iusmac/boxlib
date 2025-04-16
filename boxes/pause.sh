@@ -87,12 +87,20 @@ function pause() { # {{{
                 fi
                 break
             done
+
+            # Ensure we respect the DIALOG_* exit status codes variables
+            local -i l_renderer_code=${__PAUSE['renderer-code']?}
+            __whiptail_to_dialog_code $l_renderer_code; l_renderer_code=$?
+
             # Prevent the menu box from looping, if needed
             if [ "${__PAUSE['remaining']?}" -lt 0 ]; then # Timed out
                 if [ "$l_loop" != 'true' ]; then
                     break
                 fi
-            elif [ "${__PAUSE['renderer-code']?}" -gt 0 ] || [ "$l_loop" != 'true' ]; then
+            elif [ $l_renderer_code -ne "${DIALOG_EXTRA:-3}" ] &&
+                [ $l_renderer_code -ne "${DIALOG_HELP:-2}" ] &&
+                [ $l_renderer_code -ne "${DIALOG_OK:-0}" ] &&
+                [ $l_renderer_code -ne "${DIALOG_ITEM_HELP:-4}" ] || [ "$l_loop" != 'true' ]; then
                 break
             fi
         done

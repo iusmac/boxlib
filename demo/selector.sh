@@ -3,10 +3,12 @@
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$ROOT"/../core.sh
 
+# This demo box is part of the main menu, so we'll use it's menu entry title for all boxes
+config title="$1"
+
 # Pre-select this file in the selector box
 init="$ROOT/${BASH_SOURCE[0]##*/}"
 if result="$(selector \
-    title='Example file/path selector box' \
     filepath="$init")"; then
-    text title='Selected path' text="$result"
+    text text="Selected path: $result"
 fi

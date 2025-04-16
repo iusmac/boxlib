@@ -3,9 +3,11 @@
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$ROOT"/../core.sh
 
+# This demo box is part of the main menu, so we'll use it's menu entry title for all boxes
+config title="$1"
+
 list \
     type='build' \
-    title='Example build list' \
     prefix='alphanum'
 
 for i in {1..10}; do
@@ -17,5 +19,5 @@ for i in {1..10}; do
 done
 
 if result="$(listDraw)" && [ -n "$result" ]; then
-    text title='Build list result' text="You chose:\n$result"
+    text text="You chose:\n$result"
 fi

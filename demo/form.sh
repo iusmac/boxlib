@@ -3,6 +3,9 @@
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$ROOT"/../core.sh
 
+# This demo box is part of the main menu, so we'll use it's menu entry title for all boxes
+config title="$1"
+
 function form_handler() {
     text title='Registration form result' text="$(cat <<- EOL
 		First Name       = ${1:-<unset>}
@@ -22,7 +25,6 @@ function form_handler() {
 }
 
 form \
-    title='Example form' \
     text="$(cat <<- EOL
 		Please, complete the registration form or press ESC to exit.
 		Hint: Use up/down arrows (or control/N, control/P) to move between fields.

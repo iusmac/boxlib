@@ -3,9 +3,11 @@
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$ROOT"/../core.sh
 
+# This demo box is part of the main menu, so we'll use it's menu entry title for all boxes
+config title="$1"
+
 function start_checklist() {
     list \
-        title='Example check list' \
         text='Hint: use space to select options in the list below' \
         prefix='alphanum' \
         callback='checklist_handler()'
@@ -40,7 +42,7 @@ function checklist_handler() {
             text+="$entry\n"
         done
     fi
-    text title='Result' text="$text"
+    text text="$text"
 }
 
 start_checklist

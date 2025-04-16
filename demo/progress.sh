@@ -3,14 +3,14 @@
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$ROOT"/../core.sh
 
+# This demo box is part of the main menu, so we'll use it's menu entry title for all boxes
+config title="$1"
+
 if [ ! ${TASK_PROGRESS_RESULT+xyz} ]; then
     export TASK_PROGRESS_RESULT=0
 fi
 
-progress \
-    title='Example progress box' \
-    text='Loading...' \
-    width=50
+progress text='Loading...' width=50
 
 sleep .5
 

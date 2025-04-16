@@ -3,6 +3,9 @@
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$ROOT"/../core.sh
 
+# This demo box is part of the main menu, so we'll use it's menu entry title for all boxes
+config title="$1"
+
 function input_handler()  {
     # Capture the status code from the input box
     local status=$?
@@ -22,11 +25,10 @@ function input_handler()  {
 
 password="$(input \
     type='password' \
-    title='Example input password box' \
     text='Please, insert at least 4 characters to continue, or press ESC exit' \
     callback='input_handler()' \
     abortOnCallbackFailure='true' \
     loop='true')"
 if [ $? -eq 5 ]; then
-    text title='Result' text="Your password is: $password"
+    text text="Your password is: $password"
 fi

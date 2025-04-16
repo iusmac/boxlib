@@ -3,6 +3,9 @@
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$ROOT"/../core.sh
 
+# This demo box is part of the main menu, so we'll use it's menu entry title for all boxes
+config title="$1"
+
 file="$(mktemp)" || exit $?
 
 # Simulate a program working in the background and writing logs to file
@@ -20,7 +23,6 @@ file="$(mktemp)" || exit $?
 } &
 
 text \
-    title='Example text file follow box' \
     file="$file" \
     follow='true' \
     width=50% \

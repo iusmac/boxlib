@@ -261,7 +261,11 @@ function __box_build_args() { # {{{
         '--backtitle' "${__BOX['backtitle']?}"
     )
 
-    if [ -n "${__BOX['title']?}" ]; then
+    # NOTE: for Dialog, we always pass the title argument even if there's no title, as some boxes
+    # (e.g., buildlist) fail to render with error "Can't make sub-window at (56,18), size (1,60)."
+    # when it's entirely missing. For Whiptail, on the other hand, we add the title argument only
+    # when having a non-empty title, otherwise, it will draw the title borders
+    if [ -n "${__BOX['title']?}" ] || config isDialogRenderer >/dev/null; then
         __BOX_RAW_ARGS+=('--title' "${__BOX['title']?}")
     fi
 

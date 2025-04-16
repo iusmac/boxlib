@@ -110,6 +110,11 @@ function __config_init() { # {{{
             __panic 'config: Neither Dialog nor Whiptail was found in your system.'
         fi
     fi
+
+    if [ -n "${BOXLIB_DEBUG-}" ]; then
+        __config_set_debug "$BOXLIB_DEBUG"
+    fi
+
     return 0
 }
 readonly -f __config_init

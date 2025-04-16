@@ -237,7 +237,8 @@ Options:
 
     debug=
     debug
-        The file name where to write debug logs.
+        The file name where to write debug logs. This option takes precedence over the BOXLIB_DEBUG
+        environment variable.
         When no value is provided, will exit with "0" or "1" indicating the enabled debug state.
         Possible values:
             'stdout'          prints debug to the standard output

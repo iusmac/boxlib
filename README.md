@@ -316,7 +316,7 @@ Option             | Description
 `rendererPath=`    | <sup id="config-options-renderer_path"><sub>[#][config-options-renderer_path]</sub></sup> The absolute path to Dialog or Whiptail binary that will render the boxes.<br>Defaults to `dialog`.
 `rendererName=`    | <sup id="config-options-renderer_name"><sub>[#][config-options-renderer_name]</sub></sup> The renderer name when renderer binary is specified.<br>Possible values: `dialog`, `whiptail`.<br>Defaults to: `dialog`.
 `breadcrumbsDelim=`| <sup id="config-options-breadcrumbs_delim"><sub>[#][config-options-breadcrumbs_delim]</sub></sup> Set the breadcrumb delimiter string. Can by any length.<br>Defaults to: ` > `.
-`debug=`<br>`debug`| <sup id="config-options-debug"><sub>[#][config-options-debug]</sub></sup> The file name where to write debug logs.<br>When no value is provided, will exit with `0` or `1` indicating the enabled debug state.<table><tr><th>Possible values</th><th></th></tr><tr><td>`stdout`</td><td>prints debug to the standard output</td></tr><tr><td>`stderr`</td><td>prints debug to the standard error</td></tr><tr><td>`<filename>`</td><td>writes debug to the given _filename_.</td></tr></table>Defaults to: `/dev/null`.
+`debug=`<br>`debug`| <sup id="config-options-debug"><sub>[#][config-options-debug]</sub></sup> The file name where to write debug logs. This option takes precedence over the [`BOXLIB_DEBUG`][global-vars-debug] environment variable.<br>When no value is provided, will exit with `0` or `1` indicating the enabled debug state.<table><tr><th>Possible values</th><th></th></tr><tr><td>`stdout`</td><td>prints debug to the standard output</td></tr><tr><td>`stderr`</td><td>prints debug to the standard error</td></tr><tr><td>`<filename>`</td><td>writes debug to the given _filename_.</td></tr></table>Defaults to: `/dev/null`.
 `isDialogRenderer` | <sup id="config-options-is_dialog_renderer"><sub>[#][config-options-is_dialog_renderer]</sub></sup> Check whether Dialog is the default renderer. Will print `true` or `false` and also exit with `0` or `1`.
 `reset`            | <sup id="config-options-reset"><sub>[#][config-options-reset]</sub></sup> Reset the configuration to defaults.
 `help`             | <sup id="config-options-help"><sub>[#][config-options-help]</sub></sup> Print the usage screen and exit.
@@ -1140,6 +1140,16 @@ will still take precedence, though. Example usage:
 > ```
 </blockquote></details>
 
+<details><summary><code id="global-vars-debug">$BOXLIB_DEBUG=/path/to/file</code></summary><blockquote>
+
+This environment variable enables debug printing to file or terminal. It also accepts the
+[debug][config-options-debug] option values. The latter (if used), will still take precedence,
+though. Example usage:
+> ```bash
+> BOXLIB_DEBUG=stderr ./my_app/main.sh 1 # or BOXLIB_DEBUG=stderr bash ./my_app/main.sh
+> ```
+</blockquote></details>
+
 <details><summary><code>$BOXLIB_LOADED</code></summary><blockquote>
 
 This read-only variable is set after the library has been loaded (sourced). Example usage:
@@ -1154,8 +1164,9 @@ fi
 <!-- }}} -->
 
 # Troubleshooting<!-- {{{ -->
-- Use the [`debug`][config-options-debug] option at the very top of the file (e.g., the entrypoint
-script) to record logs (including backend renderer errors) to a file or print them all to terminal.
+- Set the [`BOXLIB_DEBUG`][global-vars-debug] environment variable, or the [`debug`][config-options-debug]
+option at the very top of the file (e.g., the entrypoint script) to record logs (including backend
+renderer errors) to a file or print them all to terminal.
 
 - On some unexpected box render failures or if you happened to hit `Ctrl+C` during box drawing,
 the terminal may be left in a messed-up state (e.g., an invisible cursor, leftovers of the boxes, etc.).
@@ -1291,5 +1302,6 @@ Usage:
 [timepicker-options-time_format]: #user-content-timepicker-options-time_format
 [timepicker-options-force_input_box]: #user-content-timepicker-options-force_input_box
 [global-vars-use-whiptail]: #user-content-global-vars-use-whiptail
+[global-vars-debug]: #user-content-global-vars-debug
 <!-- }}}
 vim: set fdm=marker: -->

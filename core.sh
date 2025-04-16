@@ -14,7 +14,7 @@ if [ ! ${BOXLIB_LOADED+xyz} ]; then
     readonly __BOXLIB_DIR
 
     # Create a FIFO file that will be used to capture stderr from the renderer
-    readonly __BOXLIB_FIFO_RENDERER_ERROR="$__BOXLIB_DIR/.renderer_err"
+    readonly __BOXLIB_FIFO_RENDERER_ERROR="$__BOXLIB_DIR/.renderer_err_$UID"
     if [ -e "$__BOXLIB_FIFO_RENDERER_ERROR" ]; then
         rm "$__BOXLIB_FIFO_RENDERER_ERROR" || return $?
     fi

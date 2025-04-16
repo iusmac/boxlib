@@ -22,6 +22,7 @@ function info() { # {{{
             # 'linux' terminfo instead to render boxes, which fully supports ncurses.
             # Ref: https://bugs.launchpad.net/ubuntu/+source/newt/+bug/604212
             xterm*|*-256color) l_box_args+=('term=linux');;
+            screen) l_box_args+=('term=linux');; # Same issue with 'screen' terminfo...
         esac
     else
         case "$TERM" in

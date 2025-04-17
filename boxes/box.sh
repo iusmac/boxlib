@@ -627,6 +627,10 @@ function __box_exec() { # {{{
                     exit $l_renderer_code
                 fi
             fi
+
+            # Clear the result array to avoid the process results step as it may contain just the
+            # error message
+            l_result=()
         fi
         if [ ${l_errfd+xyz} ]; then
             exec {l_errfd}>&-

@@ -43,18 +43,13 @@ for i in {1..10}; do
     sleep .3
 done
 
-# Set the overall progress to 100%
-progressSet value=10
+# 10x the total to compute more precise percentage values as Bash doesn't support floats
+progressSet total=100
 
-progressSet text='Finishing'
+progressSet value=85 text='Finishing'
 sleep .3
-progressSet text='Finishing.'
+progressSet value=90 text='Finishing.'
 sleep .3
-progressSet text='Finishing..'
+progressSet value=95 text='Finishing..'
 sleep .3
-progressSet text='Finishing...'
-sleep 1
-
-# NOTE: explicitly exiting when mixed progress was used is recommended to
-# properly clear the screen
-progressExit
+progressSet value=100 text='Finishing...'

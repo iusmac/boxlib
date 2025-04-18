@@ -1,4 +1,4 @@
-https://github.com/user-attachments/assets/5f36ac80-651c-452b-83d1-892b0c707f9f
+https://github.com/user-attachments/assets/3efe0be7-c3cc-4c6e-a4f1-f9274d108f65
 
 # boxlib [![Latest Tag][tags/latest-tag-badge]][tags/url] [![License][license-badge]](./LICENSE)<!-- {{{ -->
 boxlib is a simple, pure Bash library that provides a collection of APIs for creating TUI (terminal user interface)

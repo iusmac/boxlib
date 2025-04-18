@@ -110,7 +110,7 @@ function __progress_draw() { # {{{
     {
         trap '__progress_clean_up' EXIT
         __box_draw "${__PROGRESS['current-value']?}" < "$l_fifo"
-    } &
+    } & __PROGRESS['pid']=$!
 
     local l_fd
     exec {l_fd}>"$l_fifo"
@@ -138,9 +138,11 @@ function progressSet() { # {{{
     fi
 
     if [ "${__PROGRESS['current-value']?}" -ge 100 ]; then
-        if [ "${__PROGRESS['sleep']?}" != 0 ]; then
-            sleep "${__PROGRESS['sleep']?}" || exit $?
+        if [ "${__PROGRESS['sleep']?}" = 0 ]; then
+            # Allow for the last frame to be drawn before exiting the box
+            sleep .1
         fi
+        __progress_exit
     fi
 } # }}}
 
@@ -153,18 +155,31 @@ function progressExit() { # {{{
         fi
         __panic "progressExit: Unrecognized argument(s): $*."
     fi
+    __progress_exit
+}
+# }}}
 
+# Function to gracefully exit the progress box and perform post-activities, such as cleanup.
+# @hide
+function __progress_exit() { # {{{
     __progress_assert_displaying
 
-    # Save sleep value before clean up
+    # Save values before clean up
     local l_sleep="${__PROGRESS['sleep']?}"
+    local -i l_pid="${__PROGRESS['pid']?}"
 
     __progress_clean_up
+
+    # Wait for the progress box to terminate before exiting the script, as it should remove the
+    # alternate buffer to cleanup the screen, and restore TTY input settings
+    wait $l_pid 2>/dev/null
 
     if [ "$l_sleep" != 0 ]; then
         sleep "$l_sleep" || exit $?
     fi
-} # }}}
+}
+readonly -f __progress_exit
+# }}}
 
 # Function to set common progress options.
 # @hide

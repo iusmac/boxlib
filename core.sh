@@ -9,7 +9,7 @@ if [ ! ${BOXLIB_LOADED+xyz} ]; then
     fi
 
     # Setup global library vars for internal use
-    readonly __BOXLIB_VERSION='1.2.2-beta'
+    readonly __BOXLIB_VERSION='1.2.3-beta'
     __BOXLIB_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)" || return $?
     readonly __BOXLIB_DIR
 

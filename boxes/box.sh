@@ -350,7 +350,7 @@ readonly -f __box_build_args
 # @hide
 function __box_compute_size() { # {{{
     local l_type="${1?}" l_height="${2?}" l_width="${3?}" l_text="${4?}"
-    local -n box_size_ref="${5?}"
+    local -n l_box_size_ref="${5?}"
 
     case "$l_width" in
         *%) l_width="$(__scale_value "$l_width" "$(tput cols)")";;
@@ -375,13 +375,13 @@ function __box_compute_size() { # {{{
                     l_width="$(($(tput cols) - 4))"
                 fi
                 if [ "$l_height" -le 0 ]; then
-                    local lines size=11
+                    local l_lines l_size=11
                     # Ensure the box doesn't cover the backtitle displayed at the top of the screen
                     if [ -n "${__BOX['backtitle']:-}" ]; then
-                        size=$((size + 4))
+                        l_size=$((l_size + 4))
                     fi
-                    lines="$(tput lines)"
-                    l_height="$((lines - size < 1 ? 1 : lines - size))"
+                    l_lines="$(tput lines)"
+                    l_height="$((l_lines - l_size < 1 ? 1 : l_lines - l_size))"
                 fi
                 ;;
             pause|progress)
@@ -389,13 +389,13 @@ function __box_compute_size() { # {{{
                 # the account the text height. We need at least MIN_HEIGHT rows to display 1 line,
                 # so we add 1 row to the height for each new line
                 if [ -n "${l_text?}" ] && [ "$l_height" -eq 0 ]; then
-                    local text_line_nr min_height
-                    text_line_nr="$(__count_lines "$l_text")"
+                    local l_text_line_nr l_min_height
+                    l_text_line_nr="$(__count_lines "$l_text")"
                     case "$l_type" in
-                        pause) min_height=7;;
-                        progress) min_height=5;;
+                        pause) l_min_height=7;;
+                        progress) l_min_height=5;;
                     esac
-                    l_height=$((min_height + text_line_nr))
+                    l_height=$((l_min_height + l_text_line_nr))
                 fi
         esac
     else
@@ -412,9 +412,9 @@ function __box_compute_size() { # {{{
                 # reason to display it unless height is at least 7 rows. We need at least 7 rows to
                 # display 1 line, so we add 1 row to the height for each new line
                 if [ -n "${l_text?}" ] && [ "$l_height" -eq 0 ]; then
-                    local text_line_nr
-                    text_line_nr="$(__count_lines "$l_text")"
-                    l_height=$((6 + text_line_nr))
+                    local l_text_line_nr
+                    l_text_line_nr="$(__count_lines "$l_text")"
+                    l_height=$((6 + l_text_line_nr))
                 fi
                 ;;
             progress)
@@ -424,11 +424,11 @@ function __box_compute_size() { # {{{
                 # we'll grow the box height using empty lines excluding the initial text height and
                 # the provided height of the box
                 if [ "$l_height" -gt 6 ]; then
-                    local i text_line_nr=0
+                    local i l_text_line_nr=0
                     if [ -n "${l_text?}" ]; then
-                        text_line_nr="$(__count_lines "$l_text")"
+                        l_text_line_nr="$(__count_lines "$l_text")"
                     fi
-                    for ((i = 0; i < l_height - 6 - text_line_nr; i++)); do
+                    for ((i = 0; i < l_height - 6 - l_text_line_nr; i++)); do
                         l_text+=$'\n\x20' # use a space (\x20) to actually create an empty line
                     done
                     # The box height should be set to 0 (auto-size) if at least one line was reserved
@@ -438,9 +438,9 @@ function __box_compute_size() { # {{{
                 fi
         esac
     fi
-    box_size_ref[0]=$l_height
+    l_box_size_ref[0]=$l_height
     # shellcheck disable=SC2034
-    box_size_ref[1]=$l_width
+    l_box_size_ref[1]=$l_width
 }
 readonly -f __box_compute_size
 # }}}

@@ -63,10 +63,12 @@ function progress() { # {{{
 
     if config isDialogRenderer >/dev/null && [ "${__PROGRESS['mixed']?}" -eq 1 ]; then
         __box 'mixedprogress' "${l_box_args[@]}"
+        __progress_compute_max_box_content_dimens
         __box_set_dump_callback '__progress_dump_callback'
         __box_draw "${__PROGRESS['current-value']?}" "${__PROGRESS_ENTRIES[@]}"
     else
         __box 'progress' "${l_box_args[@]}"
+        __progress_compute_max_box_content_dimens
         __box_set_dump_callback '__progress_dump_callback'
         __progress_draw
     fi
@@ -204,18 +206,12 @@ function __progress_set() { # {{{
     done
 
     if [ ${l_new_text+xyz} ]; then
-        local l_old_text="${__BOX['text']?}"
-        if [ ${__PROGRESS['text']+xyz} ]; then
-            l_old_text="${__PROGRESS['text']}"
-        fi
+        local l_old_text="${__PROGRESS['text']-${__BOX['text']?}}"
+        __PROGRESS['text']="$l_new_text"
         # Nor Dialog nor Whiptail auto resize to fit the new text, so redraw is needed
-        if  [ "$l_old_text" != "$l_new_text" ] && {
-            [ "${__BOX['width']?}" = 'auto' ] || [ "${__BOX['width']?}" -eq 0 ] ||
-            [ "${__BOX['height']?}" = 'auto' ] || [ "${__BOX['height']?}" -eq 0 ]
-        }; then
+        if [ "$l_old_text" != "$l_new_text" ] && __progress_compute_max_box_content_dimens; then
             __PROGRESS['force-redraw']=1
         fi
-        __PROGRESS['text']="$l_new_text"
     fi
 
     if [ ${#l_entries[@]} -ne ${#l_states[@]} ]; then
@@ -345,6 +341,36 @@ function __progress_assert_displaying() { # {{{
     fi
 }
 readonly -f __progress_assert_displaying
+# }}}
+
+# Compute the progress box content max dimensions based on the current text's width (columns) &
+# height (lines).
+# Returns 0 when the current progress box content dimensions grew in size, otherwise 1 when it
+# remained the same or shrunk in size compared to the previous content dimensions.
+# @hide
+function __progress_compute_max_box_content_dimens() { # {{{
+    local l_text="${__PROGRESS['text']-${__BOX['text']?}}"
+    local -i l_changed=1
+    if [ "${__BOX['width']?}" = 'auto' ] || [ "${__BOX['width']?}" -eq 0 ]; then
+        local IFS=$'\n' l_line
+        for l_line in ${l_text//\\n/$'\n'}; do
+            if [ ${#l_line} -gt "${__PROGRESS['max-text-width']-0}" ]; then
+                __PROGRESS['max-text-width']=${#l_line}
+                l_changed=0
+            fi
+        done
+    fi
+    if [ "${__BOX['height']?}" = 'auto' ] || [ "${__BOX['height']?}" -eq 0 ]; then
+        local -i l_text_line_nr
+        l_text_line_nr="$(__count_lines "$l_text")"
+        if [ $l_text_line_nr -gt "${__PROGRESS['max-text-height']-0}" ]; then
+            __PROGRESS['max-text-height']=$l_text_line_nr
+            l_changed=0
+        fi
+    fi
+    return $l_changed
+}
+readonly -f __progress_compute_max_box_content_dimens
 # }}}
 
 # Function to close the FIFO file used to update the progress box.

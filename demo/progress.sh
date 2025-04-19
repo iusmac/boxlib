@@ -10,7 +10,7 @@ if [ ! ${TASK_PROGRESS_RESULT+xyz} ]; then
     export TASK_PROGRESS_RESULT=0
 fi
 
-progress text='Loading...' width=50
+progress text='Loading...'
 
 sleep .5
 

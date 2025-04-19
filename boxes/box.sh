@@ -508,7 +508,8 @@ function __box_exec() { # {{{
     __BOX['depth']=$((${__BOX['depth']?}+1))
     local -i l_depth=${__BOX['depth']}
 
-    if config debug && [ "${__BOX['debug-summary-printed']?}" -eq 0 ]; then
+    if config debug && [ ! -s "${__CONFIG['debug']}" ] &&
+        [ "${__BOX['debug-summary-printed']?}" -eq 0 ]; then
         __BOX['debug-summary-printed']=1
         __box_print_log_header >> "${__CONFIG['debug']}"
     fi

@@ -398,6 +398,30 @@ function __box_compute_size() { # {{{
                     l_height=$((l_min_height + l_text_line_nr))
                 fi
         esac
+        case "$l_type" in
+            progress)
+                # When box text is supplied and width is 0 (auto-size), Dialog doesn't take into the
+                # account the window elements like borders, padding, etc. As a result, the text is
+                # wrapped. We'll set the box width to the width of the largest line + reserved space
+                if [ -n "${l_text?}" ] && [ "$l_width" -eq 0 ]; then
+                    local l_ifs_copy="$IFS" IFS=$'\n' l_line
+                    for l_line in ${l_text//\\n/$'\n'}; do
+                        if [ ${#l_line} -gt "$l_width" ]; then
+                            l_width=${#l_line}
+                        fi
+                    done
+                    IFS="$l_ifs_copy"
+                    if [ "$l_width" -gt 0 ]; then
+                        l_width=$((l_width + 4))
+                        if [ "$l_width" -ge "$(tput cols)" ]; then
+                            # Text exceeds the terminal width, let Dialog wrap it to avoid the
+                            # "Can't make new window at (<y>,<x>), size (<h>,<w>)" error
+                            l_width=0
+                        fi
+                    fi
+                fi
+                ;;
+        esac
     else
         # Maximize with height and width = -1 to line up with Dialog behavior
         if [ "$l_width" -eq -1 ]; then

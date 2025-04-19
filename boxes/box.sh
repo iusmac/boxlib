@@ -506,7 +506,6 @@ function __box_exec() { # {{{
     local l_type="${__BOX['type']?}" l_title="${__BOX['title']?}"
 
     __BOX['depth']=$((${__BOX['depth']?}+1))
-    local -i l_depth=${__BOX['depth']}
 
     if config debug && [ ! -s "${__CONFIG['debug']}" ] &&
         [ "${__BOX['debug-summary-printed']?}" -eq 0 ]; then
@@ -570,7 +569,7 @@ function __box_exec() { # {{{
             done | __treeify 2 0
         echo '}'
         echo -n 'RAW COMMAND:'; printf ' "%s"' "$@"; echo
-    } | __treeify $l_depth >> "${__CONFIG['debug']}"
+    } | __box_log
     fi
 
     local l_raw_result
@@ -579,7 +578,7 @@ function __box_exec() { # {{{
     while :; do
         if config debug; then {
             printf "START DRAW BOX: %s (%s)\n" "$l_type" "$l_title"
-        } | __treeify $l_depth >> "${__CONFIG['debug']}"
+        } | __box_log
         fi
 
         # Step 1: execute the renderer and parse the result as array
@@ -641,7 +640,7 @@ function __box_exec() { # {{{
                 local l_error
                 printf -v l_error "renderer error: %s (%s): %s\n" "$l_type" "$l_title" "$l_raw_result"
                 if config debug; then
-                    echo "$l_error" | __treeify $l_depth >> "${__CONFIG['debug']}"
+                    echo "$l_error" | __box_log
                 else
                     echo "$l_error" >&2
                 fi
@@ -670,7 +669,7 @@ function __box_exec() { # {{{
             echo 'result ['
                 __pretty_print_array l_result | __treeify 2 0
             echo ']'
-        } | __treeify $l_depth >> "${__CONFIG['debug']}"
+        } | __box_log
         fi
 
         # Step 2: process the internal callbacks, if any
@@ -715,7 +714,7 @@ function __box_exec() { # {{{
         if [ "${__BOX['sleep']?}" != 0 ]; then
             if config debug; then {
                 echo 'SLEEPING:' "${__BOX['sleep']?}"; echo
-            } | __treeify $l_depth >> "${__CONFIG['debug']}"
+            } | __box_log
             fi
             sleep "${__BOX['sleep']?}" || exit $?
         fi
@@ -760,7 +759,7 @@ function __box_exec() { # {{{
 
                     if config debug; then {
                         printf "EXIT CALLBACK: %s (code=%d)\n" "$l_callback" $l_callback_code
-                    } | __treeify $l_depth >> "${__CONFIG['debug']}"
+                    } | __box_log
                     fi
 
                     if [ $l_callback_code -gt 0 ] &&
@@ -783,7 +782,7 @@ function __box_exec() { # {{{
         }; then
             if config debug; then {
                 echo 'PROCESS BOX CALLBACK:' "$l_callback"
-            } | __treeify $l_depth >> "${__CONFIG['debug']}"
+            } | __box_log
             fi
 
             __box_exec_callback_sandboxed \
@@ -791,7 +790,7 @@ function __box_exec() { # {{{
 
             if config debug; then {
                 printf "EXIT CALLBACK: %s code=%d\n" "$l_callback" $l_callback_code
-            } | __treeify $l_depth >> "${__CONFIG['debug']}"
+            } | __box_log
             fi
 
             if [ $l_callback_code -gt 0 ] && [ "${__BOX['abortOnCallbackFailure']?}" = 'true' ]; then
@@ -810,7 +809,7 @@ function __box_exec() { # {{{
 
         if config debug; then {
             printf "LOOP BOX: %s (%s)\n" "$l_type" "$l_title"
-        } | __treeify $l_depth >> "${__CONFIG['debug']}"
+        } | __box_log
         fi
 
         # Clean up everything to ensure we don't mistakenly propagate the old values to the new box,
@@ -826,10 +825,10 @@ function __box_exec() { # {{{
     if config debug; then {
         printf "EXIT BOX: %s (%s) code=%d\n" "$l_type" "$l_title" \
             "${l_callback_code:-${l_renderer_code?}}"
-    } | __treeify $l_depth >> "${__CONFIG['debug']}"
+    } | __box_log
     fi
 
-    __BOX['depth']=$((l_depth-1))
+    __BOX['depth']=$((${__BOX['depth']?}-1))
 
     if [ "${__BOX['propagateCallbackExitCode']?}" = 'true' ] && [ ${l_callback_code+xyz} ]; then
         return "$l_callback_code"
@@ -992,4 +991,12 @@ Renderer Error FIFO    : $(ls -l "$__BOXLIB_FIFO_RENDERER_ERROR")
 EOL
 }
 readonly -f __box_print_log_header
+# }}}
+
+# Helper function to log (w/formatting) everything coming from stdin to file.
+# @hide
+function __box_log() { # {{{
+    __treeify "${__BOX['depth']}" >> "${__CONFIG['debug']}"
+}
+readonly -f __box_log
 # }}}

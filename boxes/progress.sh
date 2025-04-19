@@ -133,8 +133,8 @@ function progressSet() { # {{{
     __progress_set "$@"
     __progress_compute
     if [ "${__PROGRESS['force-redraw']:-0}" -eq 1 ]; then
-        __PROGRESS['force-redraw']=0
         __progress_draw
+        __PROGRESS['force-redraw']=0
     else
         __progress_refresh
     fi
@@ -312,6 +312,9 @@ function __progress_refresh() { # {{{
         if [ "${__PROGRESS['mixed']?}" -eq 1 ] && ! config isDialogRenderer >/dev/null &&
             __progress_generate_entries; then
             l_text="${__PROGRESS['entries']?}\n$l_text"
+        fi
+        if config debug; then
+            __progress_dump_callback | __box_log
         fi
         printf "XXX\n%d\n%s\nXXX\n" \
             "${__PROGRESS['current-value']?}" "$l_text" >&"${__PROGRESS['fd']?}" || exit $?

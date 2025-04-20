@@ -603,14 +603,18 @@ function __box_exec() { # {{{
                 ;;
             *)
                 l_result=() l_raw_result=''
-                local l_buf l_lf=''
+                local l_buf l_lf='' l_extra_lf='\n'
+                case "$l_type" in
+                    # The lists use the --separate-output argument, so there's no need for extra LF
+                    checklist|buildlist) l_extra_lf=''
+                esac
                 # Read the renderer output line by line until EOF is reached. NOTE: read will exit
                 # with code 1 when EOF is reached and contain the last chunk (renderer exit code)
                 while IFS= read -r l_buf || ! l_renderer_code="$l_buf"; do
                     l_raw_result+="${l_lf}${l_buf}"
                     l_result+=("$l_buf")
                     l_lf=$'\n'
-                done < <(TERM="${__BOX['term']:-$TERM}" "$@" 3>&1 1>&2 2>&3 < /dev/tty; printf '\n%d' $?)
+                done < <(TERM="${__BOX['term']:-$TERM}" "$@" 3>&1 1>&2 2>&3 < /dev/tty; printf $l_extra_lf'%d' $?)
                 # Clear the result array to avoid the process results step as nothing is printed to
                 # stdout when renderer exited with ESC or Ctrl+c, but the array will contain the LF
                 # char, which converts to empty string

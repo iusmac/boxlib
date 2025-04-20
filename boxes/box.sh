@@ -712,7 +712,20 @@ function __box_exec() { # {{{
                     ;&
                 "$__BOX_VALIDATION_CALLBACK_SWAP_RETCODE")
                     l_renderer_code=${__BOX_VALIDATION_CALLBACK_RESPONSE[0]?}
+                    ;;
+                *) __panic "$l_type: Unhandled validation callback code: $l_validation_code"
             esac
+            if config debug; then {
+                echo 'RESULT-VALIDATION-CALLBACK {'; {
+                    echo "validation_code=$l_validation_code"
+                    echo "renderer_code=$l_renderer_code"
+                    echo 'result ['
+                        __pretty_print_array l_result | __treeify 2 0
+                    echo ']'
+                } | __treeify 2 0
+                echo '}'
+            } | __box_log
+            fi
         fi
 
         if [ "${__BOX['sleep']?}" != 0 ]; then

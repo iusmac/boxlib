@@ -787,6 +787,29 @@ Sets up a new program box that will display the output of a command. Corresponds
 > [!NOTE]
 > In Whiptail, this feature is emulated using an [input](#input) field with validation.
 
+> [!IMPORTANT]
+> When using process substitution to feed the program box, it's crucial to `wait` for the process
+> substitution's PID to ensure correct behavior of the box, especially with [`hideOk="false"`][program-options-hide_ok]
+> option. See example:
+> ```bash
+> { /bin/cmd; } > >(program text='Working in progress...') 2>&1
+> wait $!
+>
+> # Pitfall: the result of $! could be empty if process substitution is fed by
+> # an external command ('/bin/cmd' in this case). As a workaround, wrap external
+> # command call using a Bash function or put everything in {...} block and
+> # redirect the output of the block as shown above.
+> # For more details, see https://unix.stackexchange.com/a/524844
+> ```
+> The rationale behind that, is because the program box reads your program's output in a separate
+> subshell. Once your program finishes, the subshell running the program box will be
+> effectively detached from the main Bash process. By explicitly waiting for it before exiting your
+> script or launching another box, you ensure the program box can clean up the screen and restore
+> TTY input settings.
+>
+> Also, this strictly requires **Bash v4.4** for the process substitution's PID to be `wait`able.
+> For Bash v4.3, use `flock`-style locking mechanism to achieve the same.
+
 <details><summary><strong>Demo</strong> | <a href="./demo/program.sh">Show example code</a></summary>
 
 ![Demo program box (Dialog)](./demo/images/program/demo-program-dialog.gif)

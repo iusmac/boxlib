@@ -399,7 +399,7 @@ function __box_compute_size() { # {{{
                 fi
         esac
         case "$l_type" in
-            progress)
+            pause|progress)
                 # When box text is supplied and width is 0 (auto-size), Dialog doesn't take into the
                 # account the window elements like borders, padding, etc. As a result, the text is
                 # wrapped. We'll set the box width to the width of the largest line + reserved space

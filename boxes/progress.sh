@@ -195,6 +195,7 @@ function __progress_set() { # {{{
             entry) l_entries+=("$l_value");;
             state) l_states+=("$l_value");;
             text) l_new_text="$l_value";;
+            text+) l_new_text+="$l_value";;
             value|total) __PROGRESS["$l_param"]="$(__trim_decimals "$l_value")";;
             *) __panic "${FUNCNAME[1]}: Unrecognized argument: $1"
         esac

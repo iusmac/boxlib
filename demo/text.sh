@@ -7,7 +7,9 @@ source "$ROOT"/../core.sh
 config title="$1"
 
 text \
-    text="Lorem ipsum dolor sit amet, consectetur adipiscing elit.\nPraesent viverra felis ut tortor semper tincidunt ac a lorem.\nFusce vitae." \
+    text="Lorem ipsum dolor sit amet, consectetur adipiscing elit.\n" \
+    text+="Praesent viverra felis ut tortor semper tincidunt ac a lorem.\n" \
+    text+="Fusce vitae." \
     okLabel='Press Enter to close'; code=$?
 
 if [ $code -eq 255 ]; then # Escape key pressed

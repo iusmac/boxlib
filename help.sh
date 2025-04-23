@@ -13,7 +13,9 @@ Common options:
         Defaults to an empty string.
 
     text=
-        The string that is displayed inside the box.
+    text+=
+        The string that is displayed inside the box. The '+=' operator will concatenate with the
+        previous 'text=' value (e.g., '$1 text='very long line1\n' text+='very long line2').
         Defaults to an empty string.
 
     width=
@@ -935,7 +937,9 @@ Usage: progressSet [<options>]
 
 Options:
     text=
-        The new string to display inside the progress box.
+    text+=
+        The new string to display inside the progress box. The '+=' operator will concatenate with
+        the previous 'text=' value (e.g., 'progressSet text='very long line1\n' text+='very long line2').
 
     value=
         The new value to calculate the percentage of the progress bar. If 'total' option is not set,

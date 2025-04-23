@@ -7,11 +7,9 @@ source "$ROOT"/../core.sh
 config title="$1"
 
 confirm \
-    text="$(cat << EOF
-You take the blue pill, the story ends.
-You take the red pill, you stay in Wonderland.
-EOF
-)" yesLabel='Red pill' noLabel='Blue pill'; code=$?
+    text="You take the blue pill, the story ends.\n" \
+    text+="You take the red pill, you stay in Wonderland." \
+    yesLabel='Red pill' noLabel='Blue pill'; code=$?
 
 case $code in
     0) text text='You chose: Red Pill';;

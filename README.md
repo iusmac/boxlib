@@ -351,7 +351,7 @@ Each box may have its own specific options, but all boxes share the following co
 Option             | Description
 ------------------ | -----------
 `title=`           | <sup id="box-common-options-title"><sub>[#][box-common-options-title]</sub></sup> The string that is displayed at the top of the box.<br>Same as using Whiptail/Dialog's `--title` option.<br>Defaults to an empty string.
-`text=`            | <sup id="box-common-options-text"><sub>[#][box-common-options-text]</sub></sup> The string that is displayed inside the box.<br>Defaults to an empty string.
+`text=`<br>`text+=`| <sup id="box-common-options-text"><sub>[#][box-common-options-text]</sub></sup> The string that is displayed inside the box. The `+=` operator will concatenate with the previous `text=` value (e.g., `info text='very long line1\n' text+='very long line2`).<br>Defaults to an empty string.
 `width=`           | <sup id="box-common-options-width"><sub>[#][box-common-options-width]</sub></sup> The width of the box.<br>Use `auto` or `0` to auto-size to fit the contents. Use `max` or `-1` to maximize.<br>Can be denoted using percent sign, (e.g., `50%`), to adjust dynamically based on the `tput cols` command.<br>Defaults to: `auto` (also requires `height='auto'`).
 `height=`          | <sup id="box-common-options-height"><sub>[#][box-common-options-height]</sub></sup> The height of the box.<br>Use `auto` or `0` to auto-size to fit the contents. Use `max` or `-1` to maximize.<br>Can be denoted using percent sign, (e.g., `50%`), to adjust dynamically based on the `tput lines` command.<br>Defaults to: `auto` (also requires `width='auto'`).
 `callback=`        | <sup id="box-common-options-callback"><sub>[#][box-common-options-callback]</sub></sup> The callback to receive the result(s) from the box. The callback will be:<ul><li>invoked as a local function if it ends with `()`</li><li>executed if it's a file with the "execute" bit set</li><li>sourced as a shell script file if it's none of the above</li></ul>In all cases, the callback should expect the result(s) as input parameters. When executed, the `$?` variable will contain the exit code from the renderer (Whiptail/Dialog).<br><br>**NOTE:**<ul><li>The callback execution will be _sandboxed_, i.e., it will run in a sub-shell. This ensures the interaction is isolated.</li><li>If the callback is a relative path to a file, then it will be searched starting from the working directory.<br>Also, the CWD will be changed to where the callback file is located before executing/sourcing it. To disable, set [`changeToCallbackDir=false`][box-common-options-change_to_callback_dir].</li></ul>
@@ -868,7 +868,7 @@ Option             | Description
 Performs adjustments on the progress box.
 Option             | Description
 ------------------ | -----------
-`text=`            | <sup id="progress_set-options-text"><sub>[#][progress_set-options-text]</sub></sup> The new string to display inside the progress box.
+`text=`<br>`text+=`| <sup id="progress_set-options-text"><sub>[#][progress_set-options-text]</sub></sup> The new string to display inside the progress box. The `+=` operator will concatenate with the previous `text=` value (e.g., `progressSet text='very long line1\n' text+='very long line2`).
 `value=`           | <sup id="progress_set-options-value"><sub>[#][progress_set-options-value]</sub></sup> The new value to calculate the percentage of the progress bar.<br>If [`total`][progress_set-options-total] option is not set, then this value is the % value of the progress bar.<br>Decimal part will be dropped.
 `total=`           | <sup id="progress_set-options-total"><sub>[#][progress_set-options-total]</sub></sup> The new _total_ or _complete_ value used to calculate the % value that will be displayed in the progress bar. Here's the general formula: `percentage=value/total*100`.<br>Decimal part will be dropped.
 `entry=`           | <sup id="progress_set-options-entry"><sub>[#][progress_set-options-entry]</sub></sup> The entry (row) name to add or update, if it already exists.
@@ -1018,7 +1018,8 @@ function main() {
   list \
     type='radio' \
     title='Actions with file' \
-    text="Choose what to do with file: $FILE\nor press ESC to cancel" \
+    text="Choose what to do with file: $FILE\n" \
+    text+="or press ESC to cancel" \
     printResult='true' # note that we need 'printResult' option to capture the choice
                        # name, so we can match it with the return status code
   
@@ -1049,12 +1050,8 @@ function open_file_handler() {
 function delete_file_handler() {
   confirm \
     title='Delete file' \
-    text="$(cat << EOF
-This action will delete the file: $FILE
-
-Are you sure you want to continue?'
-EOF
-  )" \
+    text="This action will delete the file: $FILE\n\n" \
+    text+='Are you sure you want to continue?' \
   callback='confirm_delete_file_handler()'
   return $? # <= this is the return code from the confirm box callback
 }

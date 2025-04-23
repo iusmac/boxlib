@@ -26,6 +26,7 @@ function program() { # {{{
         l_value="${1#*=}"
         case "$l_param" in
             text) l_text="$l_value";;
+            text+) l_text+="$l_value";;
             callback) l_callback="$l_value";;
             command) __PROGRAM["$l_param"]="$l_value";;
             hideOk) __assert_bool "$l_value" && __PROGRAM["$l_param"]="${__BOOLS["$l_value"]?}";;

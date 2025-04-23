@@ -10,5 +10,7 @@ if input=$(input \
     text='Please, press Enter to continue, or ESC exit' \
     value='Hello ')
 then
-    text text="Your input is ${#input} characters long. The input was:\n$input"
+    text \
+        text="Your input is ${#input} characters long. The input was:\n" \
+        text+="$input"
 fi

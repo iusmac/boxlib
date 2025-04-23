@@ -43,4 +43,7 @@ for ((i = TASK_PROGRESS_RESULT + 1; i <= 10; TASK_PROGRESS_RESULT = i++)); do
     fi
 done
 
-info text="Task result: $TASK_PROGRESS_RESULT/10\nExiting..." sleep=1.5
+info \
+    text="Task result: $TASK_PROGRESS_RESULT/10\n" \
+    text+="Exiting..." \
+    sleep=1.5

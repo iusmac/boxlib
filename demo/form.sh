@@ -25,11 +25,8 @@ function form_handler() {
 }
 
 form \
-    text="$(cat <<- EOL
-		Please, complete the registration form or press ESC to exit.
-		Hint: Use up/down arrows (or control/N, control/P) to move between fields.
-		EOL
-    )" \
+    text="Please, complete the registration form or press ESC to exit.\n" \
+    text+="Hint: Use up/down arrows (or control/N, control/P) to move between fields." \
     columns=2 \
     fieldWidth=15 \
     fieldMaxLength=30 \

@@ -26,7 +26,7 @@ function edit() { # {{{
         case "$l_param" in
             file|editor) __EDIT["$l_param"]="$l_value";;
             inPlace) __assert_bool "$l_value" && __EDIT["$l_param"]="${__BOOLS["$l_value"]?}";;
-            text) : Ignored;;
+            text|text+) : Ignored;;
             *) l_box_args+=("$1")
         esac
         local l_code=$?

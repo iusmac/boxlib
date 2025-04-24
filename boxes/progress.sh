@@ -107,6 +107,8 @@ function __progress_draw() { # {{{
     } <&0 &
     fi
 
+    __PROGRESS['cold-start']=1
+
     # Note that, we launch the progress box as a background process, so that the user script can
     # continue and perform progress updates as needed
     {
@@ -315,7 +317,20 @@ function __progress_refresh() { # {{{
             l_text="${__PROGRESS['entries']?}\n$l_text"
         fi
         if config debug; then
-            __progress_dump_callback | __box_log
+            if [ "${__PROGRESS['cold-start']?}" -eq 1 ]; then
+                __PROGRESS['cold-start']=0
+                # Delay logging to allow for the background process running the progress box to
+                # start and enter into idle state, otherwise the log will be mangled since two
+                # processes will write into the same file at the same time
+                sleep .5
+            fi
+            # NOTE: need to fix the depth level, since the progress box runs in a subshell, so the
+            # value won't be visible in the main process
+            __BOX['depth']=$((${__BOX['depth']?}+1)); {
+                echo 'PROGRESS REFRESH {'
+                    __progress_dump_callback | __treeify 2 0
+                echo '}'
+            } | __box_log; __BOX['depth']=$((${__BOX['depth']?}-1))
         fi
         printf "XXX\n%d\n%s\nXXX\n" \
             "${__PROGRESS['current-value']?}" "$l_text" >&"${__PROGRESS['fd']?}" || exit $?

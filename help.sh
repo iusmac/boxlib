@@ -585,6 +585,7 @@ Options:
     depth=
         The depth of the entry in the tree list. The entry 'title' is not displayed. After selecting
         an entry (only one can be selected like in the radio list), the entry 'title' will be the output.
+        Defaults to: 0
 
     callback=
         The callback to invoke when this entry is selected in the list. The callback will be:

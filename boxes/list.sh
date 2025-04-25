@@ -131,11 +131,12 @@ function listEntry() { # {{{
     fi
 
     if [ "${__LIST['type']?}" = 'treelist' ]; then
-        if [ ! ${l_depth+xyz} ]; then
-            __panic "listEntry: Missing 'depth' option when creating a tree list."
-        fi
-        if ! [ "$l_depth" -ge 0 ]; then
-            __panic "listEntry: Invalid depth value: $l_depth"
+        if [ ${l_depth+xyz} ]; then
+            if ! [ "${l_depth?}" -ge 0 ]; then
+                __panic "listEntry: Invalid depth value: $l_depth"
+            fi
+        else
+            l_depth=0
         fi
     elif [ ${l_depth+xyz} ]; then
         __panic "listEntry: The 'depth' option can only be used with a tree list."

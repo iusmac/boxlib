@@ -95,6 +95,8 @@ function program() { # {{{
                     continue
                 fi
 
+                l_buf="${l_buf//$'\r'/$'\n'}"
+
                 l_lf=${l_buf: -1}
                 if [ "$l_lf" != $'\n' ]; then
                     # When the new buffered data doesn't end with a new line, then we probably read

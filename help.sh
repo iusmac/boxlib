@@ -518,7 +518,15 @@ $(__box_help 'list')
 Options:
     type=
         The type of the list box.
-        Possible values: 'build', 'check', 'radio', 'tree'.
+        Possible values;
+            'build'    displays two lists, side-by-side. The results are written in the order
+                       displayed in the selected-window.
+            'check'    similar to a [menu](#menu), but allows to select either many entries or none
+                       at all. The results are written in the order displayed in the window.
+            'radio'    similar to a [menu](#menu), but allows to select either a single entry or none at all.
+            'tree'     similar to a radio list, but displays entries organized as a tree. The depth
+                       is controlled using the 'depth'. The entry 'title' is not displayed. After
+                       selecting an entry, the entry title is the output.
         Defaults to: 'check'.
 
     listHeight=
@@ -583,8 +591,7 @@ Options:
         Defaults to: 'false'.
 
     depth=
-        The depth of the entry in the tree list. The entry 'title' is not displayed. After selecting
-        an entry (only one can be selected like in the radio list), the entry 'title' will be the output.
+        The depth of the entry in the tree list.
         Defaults to: 0
 
     callback=

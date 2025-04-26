@@ -75,6 +75,12 @@ function program() { # {{{
             if [ -n "${l_header?}" ]; then
                 l_header_height="$(__count_lines "${l_header?}")"
             fi
+
+            local l_max_line_width=$((l_box_size[1] - 4)) # 4 is to exclude left & right borders
+            if [ $l_max_line_width -lt 0 ]; then
+                l_max_line_width=0
+            fi
+
             # Exclude the header height and the fixed box height (borders + title)
             local l_scroll_height=$((l_box_size[0] - l_header_height - 6))
             if [ $l_scroll_height -le 0 ]; then
@@ -83,6 +89,7 @@ function program() { # {{{
             fi
             # Save globally for debug dump
             __PROGRAM['scroll-height']=$l_scroll_height
+            __PROGRAM['max-line-width']=$l_max_line_width
 
             # Display in the info box all the data from stdin. Note that, instead of reading line by
             # line, we try to read bytes every 50ms (continuing until EOF is reached). This allows
@@ -114,14 +121,22 @@ function program() { # {{{
                         # appended to the existing text as-is
                         l_last_chunk=''
                     fi
+                else
+                    # Remove the trailing line feed char as the here string (<<<) will add one later
+                    l_buf="${l_buf::-1}"
                 fi
 
                 # Merge the new buffered lines with the old text but limit it to the scrollable area
-                l_text="$(tail -$l_scroll_height < <(printf -- '%s' "${l_text}${l_buf}"))"
+                local l_line l_text_old="$l_text"
+                l_text=''
+                while IFS= read -r l_line; do
+                    # Whiptail's info box wraps text to a new line, but Dialog's program box limits
+                    # the lines to the box width
+                    l_text+="${l_line:0:l_max_line_width}"
+                    l_text+=$'\n'
+                done < <(tail -$l_scroll_height <<< "${l_text_old}${l_buf}")
+
                 if [ "$l_lf" = $'\n' ]; then
-                    # Restore the truncated LF after the command substitution "$(tail ...)"
-                    # operation for the proper text separation
-                    l_text+="$l_lf"
                     # Redraw only when have a new line
                     info text="${l_header}${l_text}" "${l_box_args[@]}"
                 fi

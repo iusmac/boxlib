@@ -15,16 +15,13 @@ function selector() { # {{{
 
     # Clean up the old selector box
     __SELECTOR=(
-        ['type']='fselect'
         ['path']=''
         ['path-uncanonicalized']=''
         ['last-path']=''
         ['loop']=0
     )
 
-    local l_type="${__SELECTOR['type']}"
-
-    local l_param l_value l_code
+    local l_param l_value l_type='fselect' l_code
     local -a l_box_args
     while [ $# -gt 0 ]; do
         l_param="${1%%=*}"

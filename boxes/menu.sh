@@ -173,9 +173,10 @@ function menuDraw() { # {{{
 
     local l_menu_height="${__MENU['menuHeight']?}"
     local l_num_entries=$(( ${#__MENU_ENTRIES[@]} / 2 ))
-    if [ "${l_menu_height: -1}" = '%' ]; then
-        l_menu_height="$(__scale_value "$l_menu_height" "$l_num_entries")"
-    fi
+    case "$l_menu_height" in
+        *%) l_menu_height="$(__scale_value "$l_menu_height" $l_num_entries)";;
+        auto) l_menu_height=0;;
+    esac
     if [ "$l_menu_height" -eq 0 ] && [ "${__MENU['rename']?}" = 'true' ] &&
         config isDialogRenderer >/dev/null; then
         # When using inputmenu and height is 0 (auto-size), Dialog doesn't calculate the menu height

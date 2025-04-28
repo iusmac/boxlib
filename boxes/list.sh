@@ -211,10 +211,13 @@ function listDraw() { # {{{
     fi
 
     local l_list_height="${__LIST['listHeight']?}"
-    if [ "${l_list_height: -1}" = '%' ]; then
-        local l_num_entries=$(( ${#__LIST_ENTRIES[@]} / 3 ))
-        l_list_height="$(__scale_value "$l_list_height" "$l_num_entries")"
-    fi
+    case "$l_list_height" in
+        *%)
+            local l_num_entries=$(( ${#__LIST_ENTRIES[@]} / 3 ))
+            l_list_height="$(__scale_value "$l_list_height" "$l_num_entries")"
+            ;;
+        auto) l_list_height=0;;
+    esac
 
     __box_draw "$l_list_height" "${__LIST_ENTRIES[@]}"
 } # }}}

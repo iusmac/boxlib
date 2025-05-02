@@ -5,9 +5,23 @@ source "$ROOT"/../core.sh
 
 config headerTitle='Example project'
 
+# Adapt menu size for VHS tape format when recording demo
+if [ "${VHS:-0}" = '1' ]; then
+    width=95%
+    height=80%
+    menuHeight=15
+else
+    width='auto'
+    height='auto'
+    menuHeight='auto'
+fi
+
 menu \
     title='Example main menu' \
     text='Please, select an option or press ESC to exit' \
+    width=$width \
+    height=$height \
+    menuHeight=$menuHeight \
     cancelLabel='Exit' \
     prefix='alphanum' \
     loop='true'

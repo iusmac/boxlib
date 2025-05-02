@@ -1,8 +1,8 @@
-https://github.com/user-attachments/assets/3efe0be7-c3cc-4c6e-a4f1-f9274d108f65
-
 # boxlib [![Latest Tag][tags/latest-tag-badge]][tags/url] [![License][license-badge]](./LICENSE)<!-- {{{ -->
 boxlib is a simple, pure Bash library that provides a collection of APIs for creating TUI (terminal user interface)
 applications, such as installers, rescue disks or interactive scripts. It supports both [Whiptail](https://en.wikibooks.org/wiki/Bash_Shell_Scripting/Whiptail) and [Dialog](https://en.wikipedia.org/wiki/Dialog_(software)) as backends for rendering the boxes on the screen.
+
+![Demo tape](./demo/images/demo.gif)
 
 ## Features & Advantages<!-- {{{ -->
 - 🧠 **Simple, Practical & Highly Intuitive**

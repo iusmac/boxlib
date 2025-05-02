@@ -6,10 +6,17 @@ source "$ROOT"/../core.sh
 # This demo box is part of the main menu, so we'll use it's menu entry title for all boxes
 config title="$1"
 
+# Adapt mixed progress update delay when recording VHS demo
+if [ "${VHS:-0}" = '1' ]; then
+    delay=.5
+else
+    delay=.3
+fi
+
 # Initialize normal progress
 progress text='Loading...'
 
-sleep .3
+sleep $delay
 
 # Add entries (progress will be converted to a mixed progress)
 progressSet \
@@ -40,16 +47,16 @@ for i in {1..10}; do
         entry='Task 10' \
         state="-$((i*10))" \
         text="Work in progress... [$i/10]"
-    sleep .3
+    sleep $delay
 done
 
 # 10x the total to compute more precise percentage values as Bash doesn't support floats
 progressSet total=100
 
 progressSet value=85 text='Finishing'
-sleep .3
+sleep $delay
 progressSet value=90 text='Finishing.'
-sleep .3
+sleep $delay
 progressSet value=95 text='Finishing..'
-sleep .3
+sleep $delay
 progressSet value=100 text='Finishing...'

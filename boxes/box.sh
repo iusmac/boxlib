@@ -772,6 +772,11 @@ function __box_exec() { # {{{
                 local l_result_="${l_result[i]}"
                 local l_callback="${__BOX_CALLBACKS["$l_result_"]:-}"
                 if [ -n "$l_callback" ]; then
+                    if config debug; then {
+                        echo 'PROCESS BOX CALLBACK:' "$l_callback"
+                    } | __box_log
+                    fi
+
                     __box_exec_callback_sandboxed \
                         "$l_callback" $l_renderer_code "$l_result_"; l_callback_code=$?
 
@@ -788,6 +793,12 @@ function __box_exec() { # {{{
                     c=$((c+1))
                 fi
             done
+            if config debug; then {
+                echo 'result (remaining) ['
+                    __pretty_print_array l_result | __treeify 2 0
+                echo ']'
+            } | __box_log
+            fi
         fi
 
         # Step 5: process the remaining results that use the box common callback

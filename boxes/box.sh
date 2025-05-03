@@ -767,8 +767,8 @@ function __box_exec() { # {{{
 
         # Step 4: send the per-result callbacks, if any
         if [ ${#__BOX_CALLBACKS[@]} -gt 0 ]; then
-            local -i i
-            for ((i = 0; i < ${#l_result[@]}; i++)); do
+            local -i i l_n_results=${#l_result[@]} c
+            for ((i = 0, c = 0; i < l_n_results && c < ${#__BOX_CALLBACKS[@]}; i++)); do
                 local l_result_="${l_result[i]}"
                 local l_callback="${__BOX_CALLBACKS["$l_result_"]:-}"
                 if [ -n "$l_callback" ]; then
@@ -785,6 +785,7 @@ function __box_exec() { # {{{
                         exit $l_callback_code
                     fi
                     unset 'l_result[i]'
+                    c=$((c+1))
                 fi
             done
         fi

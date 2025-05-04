@@ -605,10 +605,9 @@ function __box_exec() { # {{{
             *)
                 l_result=() l_raw_result=''
                 local l_buf l_lf='' l_extra_lf='\n'
-                case "$l_type" in
-                    # The lists use the --separate-output argument, so there's no need for extra LF
-                    checklist|buildlist) l_extra_lf=''
-                esac
+                # Compared to the buildlist, the checklist adds a trailing LF (bug?), so there's no
+                # need for an extra LF
+                case "$l_type" in checklist) l_extra_lf=''; esac
                 # Read the renderer output line by line until EOF is reached. NOTE: read will exit
                 # with code 1 when EOF is reached and contain the last chunk (renderer exit code)
                 while IFS= read -r l_buf || ! l_renderer_code="$l_buf"; do

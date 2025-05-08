@@ -122,3 +122,13 @@ function __pretty_print_array() {
         printf "$l_fmt_str" "${l_array_ref[@]}"
     fi
 }
+
+function __now_millis() {
+    if [ ${EPOCHREALTIME+xyz} ]; then # Bash 5.0
+        echo $(( ${EPOCHREALTIME/[^0-9]/} / 1000))
+    elif date --version &>/dev/null; then # Linux, *BSD
+        echo $(($(date +%s%N) / 10 ** 6))
+    else # macOS, etc.
+        perl -e 'use Time::HiRes; printf "%.0f", Time::HiRes::time() * 1000'
+    fi
+}

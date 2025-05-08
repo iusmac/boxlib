@@ -771,7 +771,10 @@ function __box_exec() { # {{{
                 local l_result_="${l_result[i]}"
                 local l_callback="${__BOX_CALLBACKS["$l_result_"]:-}"
                 if [ -n "$l_callback" ]; then
-                    if config debug; then {
+                    if config debug; then
+                        # shellcheck disable=2155
+                        local start_process_box_callback_millis=$(__now_millis)
+                    {
                         echo 'PROCESS BOX CALLBACK:' "$l_callback"
                     } | __box_log
                     fi
@@ -780,7 +783,8 @@ function __box_exec() { # {{{
                         "$l_callback" $l_renderer_code "$l_result_"; l_callback_code=$?
 
                     if config debug; then {
-                        printf "EXIT CALLBACK: %s (code=%d)\n" "$l_callback" $l_callback_code
+                        printf "EXIT CALLBACK: %s (code=%d) (ET=%dms)\n" "$l_callback" $l_callback_code \
+                            $(($(__now_millis) - start_process_box_callback_millis))
                     } | __box_log
                     fi
 
@@ -809,7 +813,10 @@ function __box_exec() { # {{{
             [ $l_renderer_code -eq "${DIALOG_ITEM_HELP:-4}" ] ||
             [ "${__BOX['alwaysInvokeCallback']?}" = 'true' ]
         }; then
-            if config debug; then {
+            if config debug; then
+                # shellcheck disable=2155
+                local start_process_box_callback_millis=$(__now_millis)
+            {
                 echo 'PROCESS BOX CALLBACK:' "$l_callback"
             } | __box_log
             fi
@@ -818,7 +825,8 @@ function __box_exec() { # {{{
                 "$l_callback" $l_renderer_code "${l_result[@]}"; l_callback_code=$?
 
             if config debug; then {
-                printf "EXIT CALLBACK: %s code=%d\n" "$l_callback" $l_callback_code
+                printf "EXIT CALLBACK: %s code=%d (ET=%dms)\n" "$l_callback" $l_callback_code \
+                            $(($(__now_millis) - start_process_box_callback_millis))
             } | __box_log
             fi
 

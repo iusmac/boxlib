@@ -126,8 +126,8 @@ function listEntry() { # {{{
         shift
     done
 
-    if [ -n "$l_callback" ] && [ -z "$l_title" ]; then
-        __panic 'listEntry: A non-empty title is required when the callback option is used.'
+    if [ -n "$l_callback" ] && [ -z "$l_title" ] && [ "${__LIST['prefix']?}" != 'num' ]; then
+        __panic 'listEntry: A non-empty title is required when the callback option is used, or, set prefix="num".'
     fi
 
     if [ "${__LIST['type']?}" = 'treelist' ]; then

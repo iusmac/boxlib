@@ -117,8 +117,8 @@ function menuEntry() { # {{{
         shift
     done
 
-    if [ -n "$l_callback" ] && [ -z "$l_title" ]; then
-        __panic 'menuEntry: A non-empty title is required when the callback option is used.'
+    if [ -n "$l_callback" ] && [ -z "$l_title" ] && [ "${__MENU['prefix']?}" != 'num' ]; then
+        __panic 'menuEntry: A non-empty title is required when the callback option is used, or, set prefix="num".'
     fi
 
     if [ -n "${__MENU['prefix']?}" ]; then

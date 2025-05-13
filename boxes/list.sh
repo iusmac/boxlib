@@ -46,6 +46,8 @@ function list() { # {{{
             l_entry_args+=('[')
             shift
             continue
+        elif [ "$1" = '--notags' ]; then
+            __LIST['notags']=1
         fi
         l_param="${1%%=*}"
         l_value="${1#*=}"
@@ -168,7 +170,9 @@ function listEntry() { # {{{
         l_title="$l_prefix) $l_title"
         # Tag column is suppressed in Dialog's buildlist/treelist box, so add the prefix to the
         # summary too
-        if [ "${__LIST['type']?}" = 'buildlist' ] || [ "${__LIST['type']?}" = 'treelist' ]; then
+        if [ "${__LIST['type']?}" = 'buildlist' ] || [ "${__LIST['type']?}" = 'treelist' ] ||
+            # The --notags option will hide tag column, so need the prefix in the summary
+            [ "${__LIST['notags']+xyz}" ]; then
             l_summary="$l_prefix) $l_summary"
         fi
     fi

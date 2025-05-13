@@ -45,6 +45,8 @@ function menu() { # {{{
             l_entry_args+=('[')
             shift
             continue
+        elif [ "$1" = '--notags' ]; then
+            __MENU['notags']=1
         fi
         l_param="${1%%=*}"
         l_value="${1#*=}"
@@ -140,6 +142,10 @@ function menuEntry() { # {{{
                 ;;
         esac
         l_title="$l_prefix) $l_title"
+        # The --notags option will hide tag column, so need the prefix in the summary
+        if [ "${__MENU['notags']+xyz}" ]; then
+            l_summary="$l_prefix) $l_summary"
+        fi
     fi
 
     if [ "$l_selected" = 'true' ]; then

@@ -354,6 +354,7 @@ function __progress_compute() { # {{{
 readonly -f __progress_compute
 # }}}
 
+# @hide
 function __progress_assert_displaying() { # {{{
     if [ ! ${__PROGRESS[@]+xyz} ] && [ ! ${__PROGRESS['fd']+xyz} ]; then
         __panic "${FUNCNAME[1]}: No progress box currently displaying."

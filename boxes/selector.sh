@@ -93,27 +93,15 @@ function selector() { # {{{
                     "${__SELECTOR['path']?}".*/
                     "${__SELECTOR['path']?}"*/
                 )
-                # If the directory is empty or cannot be opened (e.g., no perms), we should still
-                # allow to select it with '.' or jump to the parent with '..'. We also want to
-                # reorder them as the '..' comes before the '.' when globbing for directories only
-                l_files[0]='./'
-                l_files[1]='../'
             else
                 l_files=(
                     # ** Match .dot files first! **
                     "${__SELECTOR['path']?}".*
                     "${__SELECTOR['path']?}"*
                 )
-                l_files[0]='.'
-                l_files[1]='..'
             fi
             if [ $l_nullglob_set -eq 0 ]; then
                 shopt -u nullglob
-            fi
-
-            # Hide the dot-dot (..) to jump to the parent when reached root
-            if [ "${__SELECTOR['path']?}" = '/' ]; then
-                unset 'l_files[1]'
             fi
 
             # Set up menu box
@@ -123,9 +111,19 @@ function selector() { # {{{
                 "${l_box_args[@]}"
             __box_set_dump_callback '__selector_dump_callback'
 
+            # Show (.) and (..) as the first entries. We want them even if the directory is empty or
+            # cannot be opened (e.g., no perms), so that the user can select the current path with
+            # (.) or jump to the parent with (..)
+            menuEntry title='./'
+            if [ "${__SELECTOR['path']?}" != '/' ]; then # show dot-dot unless root is reached
+                menuEntry title='../'
+            fi
+            # Do not process the '.' and '..' at this point
+            unset 'l_files[0]' 'l_files[1]'
+
             # Add directories first
             local i l_total=${#l_files[@]} l_last_match=''
-            for ((i = 0; i < l_total; i++)); do
+            for ((i = 2; i < l_total + 2; i++)); do
                 local l_file="${l_files[i]}"
                 if [ "$l_type" = 'fselect' ]; then
                     if [ ! -d "$l_file" ]; then
@@ -139,11 +137,6 @@ function selector() { # {{{
                 fi
 
                 local l_name="${l_file##*/}"
-                local l_summary=' folder'
-                case "$l_name" in
-                    .|..) l_summary=''
-                esac
-
                 local l_selected='false'
                 if [ "$l_name" = "${l_selected_name?}" ] || {
                     [ $l_match_exactly -eq 0 ] &&
@@ -156,7 +149,7 @@ function selector() { # {{{
                 fi
                 menuEntry \
                     title="$l_name/" \
-                    summary="$l_summary" \
+                    summary=' folder' \
                     selected="$l_selected"
             done
 

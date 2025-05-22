@@ -117,9 +117,13 @@ function program() { # {{{
                         # is now the last line
                         l_lf=$'\n'
                     else
-                        # There's no incomplete line chunks; it's a one-liner, so buf will be
-                        # appended to the existing text as-is
-                        l_last_chunk=''
+                        # The buffered data is either an incomplete line chunk or a "one-liner",
+                        # so it will be merged into the existing text "as-is" later
+                        l_last_chunk="$l_buf"
+                        l_buf=''
+                        # We're going to re-feed the same text into the scrollable area, so need to
+                        # remove the trailing line feed char as the here string (<<<) will add one
+                        l_text="${l_text::-1}"
                     fi
                 else
                     # Remove the trailing line feed char as the here string (<<<) will add one later

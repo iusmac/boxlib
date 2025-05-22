@@ -94,7 +94,7 @@ function program() { # {{{
             # Display in the info box all the data from stdin. Note that, instead of reading line by
             # line, we try to read bytes every 50ms (continuing until EOF is reached). This allows
             # to display multiple lines at once
-            local l_rc l_buf l_last_chunk='' l_lf
+            local l_rc l_buf l_last_chunk='' l_lf l_line l_text_old
             while IFS= read -r -d '' -t .05 l_buf; l_rc=$?; [ $l_rc -eq 0 ] ||
                 [ -n "$l_buf" ] || # It may exit with code 1 when EOF is reached but have the last chunk of data
                 [ $l_rc -gt 128 ]; do
@@ -127,7 +127,7 @@ function program() { # {{{
                 fi
 
                 # Merge the new buffered lines with the old text but limit it to the scrollable area
-                local l_line l_text_old="$l_text"
+                l_text_old="$l_text"
                 l_text=''
                 while IFS= read -r l_line; do
                     # Whiptail's info box wraps text to a new line, but Dialog's program box limits

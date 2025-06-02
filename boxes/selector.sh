@@ -27,7 +27,7 @@ function selector() { # {{{
         l_param="${1%%=*}"
         l_value="${1#*=}"
         case "$l_param" in
-            text) __panic 'selector: "text" option is unsupported.';;
+            text|text+) __panic 'selector: "text" option is unsupported.';;
             filepath) __SELECTOR['path']="$l_value";;
             directory)
                 l_type='dselect'

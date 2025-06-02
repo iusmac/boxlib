@@ -28,6 +28,7 @@ function range() { # {{{
         case "$l_param" in
             min|max|default) __RANGEBOX["$l_param"]="$(__trim_decimals "$value")";;
             text) l_text="$value";;
+            text+) l_text+="$value";;
             *) l_box_args+=("$1")
         esac
         local l_code=$?

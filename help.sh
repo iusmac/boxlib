@@ -1048,14 +1048,14 @@ See $__BOXLIB_DIR/demo/selector.sh for an example.
 $(__box_help 'selector')
 
 Options:
-    filepath=
+    filepath= filepath+=
         The path to a file or directory. If a file path is provided, the path contents will be
         displayed, and the filename will be pre-selected.
         Corresponds to the '--fselect' argument in Dialog.
         This option is used by default.
         Defaults to an empty string.
 
-    directory=
+    directory= directory+=
         The path to a directory. If a file path is provided, the filename will be discarded, and the
         path contents will be displayed instead.
         Corresponds to the '--dselect' argument in Dialog.

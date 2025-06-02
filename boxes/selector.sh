@@ -29,9 +29,13 @@ function selector() { # {{{
         case "$l_param" in
             text|text+) __panic 'selector: "text" option is unsupported.';;
             filepath) __SELECTOR['path']="$l_value";;
+            filepath+) __SELECTOR['path']+="$l_value";;
             directory)
                 l_type='dselect'
                 __SELECTOR['path']="$l_value";;
+            directory+)
+                l_type='dselect'
+                __SELECTOR['path']+="$l_value";;
             cancelLabel) __SELECTOR["$l_param"]="$l_value";;
             *) l_box_args+=("$1")
         esac

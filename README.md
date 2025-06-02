@@ -951,10 +951,10 @@ Component to set up a new file/directory selector box and perform drawing to the
 <details><summary><code>selector &lt;options&gt;</code></summary><blockquote>
 
 Sets up a new file/directory selector box and draws it.
-Option             | Default                                        | Description
------------------- | :--------------------------------------------: | -----------
-`filepath=`        | `""`                                           | <sup id="selector-options-filepath"><sub>[#][selector-options-filepath]</sub></sup> The path to a file or directory. If a file path is provided, the path contents will be displayed, and the filename will be pre-selected.<br>Corresponds to the `--fselect` argument in Dialog.<br>This option is used by default.
-`directory=`       | `""`                                           | <sup id="selector-options-directory"><sub>[#][selector-options-directory]</sub></sup> The path to a directory. If a file path is provided, the filename will be discarded, and the path contents will be displayed instead.<br>Corresponds to the `--dselect` argument in Dialog.<br>NOTE: only directories will be visible in the selector box when using this option.
+Option                        | Default                                        | Description
+----------------------------- | :--------------------------------------------: | -----------
+`filepath=`<br>`filepath+=`   | `""`                                           | <sup id="selector-options-filepath"><sub>[#][selector-options-filepath]</sub></sup> The path to a file or directory. If a file path is provided, the path contents will be displayed, and the filename will be pre-selected.<br>Corresponds to the `--fselect` argument in Dialog.<br>This option is used by default.
+`directory=`<br>`directory+=` | `""`                                           | <sup id="selector-options-directory"><sub>[#][selector-options-directory]</sub></sup> The path to a directory. If a file path is provided, the filename will be discarded, and the path contents will be displayed instead.<br>Corresponds to the `--dselect` argument in Dialog.<br>NOTE: only directories will be visible in the selector box when using this option.
 
 [<strong>See Common Options</strong>](#common-options)
 </blockquote></details>

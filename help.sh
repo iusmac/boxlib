@@ -581,11 +581,11 @@ See $__BOXLIB_DIR/demo/treelist.sh for an example.
 Usage: listEntry <options>
 
 Options:
-    title=
+    title= title+=
         The title of the choice entry.
         Defaults to an empty string.
 
-    summary=
+    summary= summary+=
         The summary of the entry.
         Defaults to an empty string.
 

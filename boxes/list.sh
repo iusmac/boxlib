@@ -110,7 +110,9 @@ function listEntry() { # {{{
         l_value="${1#*=}"
         case "$l_param" in
             title) l_title="$l_value";;
+            title+) l_title+="$l_value";;
             summary) l_summary="$l_value";;
+            summary+) l_summary+="$l_value";;
             selected)
                 __assert_bool "$l_value" && # NOTE: using if condition to propagate the error code
                 if [ "${__BOOLS["$l_value"]?}" = 'true' ]; then

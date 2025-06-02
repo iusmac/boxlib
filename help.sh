@@ -772,45 +772,6 @@ readonly -f __menu_draw_help
 # }}}
 
 # @hide
-function __text_help() { # {{{
-    cat << EOL
-Sets up a new text box and draws it. Corresponds to the '--msgbox', '--textbox', '--tailbox' &
-'--tailboxbg' arguments in Dialog/Whiptail.
-In whpitail, the tailbox feature is emulated using a program box.
-
-See $__BOXLIB_DIR/demo/text.sh for an example.
-See $__BOXLIB_DIR/demo/text_file_follow.sh for an example.
-
-$(__box_help 'text')
-
-Options:
-    file=
-        The path to a file whose contents to display in the box.
-        This takes precedence over the 'text' option.
-
-    follow=
-        Whether to follow the file as in "tail -f" command.
-        In Dialog, long lines can be scrolled horizontally using vi-style 'h' (left) and 'l' (right),
-        or arrow-keys. A '0' resets the scrolling. In Whiptail, new lines are wrapped by default.
-        Possible values: 'true' (or 1), 'false' (or 0).
-        Defaults to: 'false'.
-
-    inBackground=
-        Whether to follow the file in the background, as in "tail -f &" command, while displaying
-        other widgets.
-        If no widgets are added using the '--and-widget' option, the display of the box will be
-        postponed until another box is launched, which will then be used as widget.
-        NOTE: Dialog will perform all of the background widgets in the same process, polling for updates.
-        You may use Tab to traverse between the widgets on the screen, and close them individually,
-        e.g., by pressing ENTER.
-        Possible values: 'true' (or 1), 'false' (or 0).
-        Defaults to: 'false'.
-EOL
-}
-readonly -f __text_help
-# }}}
-
-# @hide
 function __pause_help() { # {{{
     cat << EOL
 Sets up a new pause box and draws it. Corresponds to the '--pause' argument in Dialog.
@@ -1064,6 +1025,45 @@ Options:
 EOL
 }
 readonly -f __selector_help
+# }}}
+
+# @hide
+function __text_help() { # {{{
+    cat << EOL
+Sets up a new text box and draws it. Corresponds to the '--msgbox', '--textbox', '--tailbox' &
+'--tailboxbg' arguments in Dialog/Whiptail.
+In whpitail, the tailbox feature is emulated using a program box.
+
+See $__BOXLIB_DIR/demo/text.sh for an example.
+See $__BOXLIB_DIR/demo/text_file_follow.sh for an example.
+
+$(__box_help 'text')
+
+Options:
+    file=
+        The path to a file whose contents to display in the box.
+        This takes precedence over the 'text' option.
+
+    follow=
+        Whether to follow the file as in "tail -f" command.
+        In Dialog, long lines can be scrolled horizontally using vi-style 'h' (left) and 'l' (right),
+        or arrow-keys. A '0' resets the scrolling. In Whiptail, new lines are wrapped by default.
+        Possible values: 'true' (or 1), 'false' (or 0).
+        Defaults to: 'false'.
+
+    inBackground=
+        Whether to follow the file in the background, as in "tail -f &" command, while displaying
+        other widgets.
+        If no widgets are added using the '--and-widget' option, the display of the box will be
+        postponed until another box is launched, which will then be used as widget.
+        NOTE: Dialog will perform all of the background widgets in the same process, polling for updates.
+        You may use Tab to traverse between the widgets on the screen, and close them individually,
+        e.g., by pressing ENTER.
+        Possible values: 'true' (or 1), 'false' (or 0).
+        Defaults to: 'false'.
+EOL
+}
+readonly -f __text_help
 # }}}
 
 # @hide

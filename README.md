@@ -737,33 +737,6 @@ Option             | Description
 ---
 <!-- }}} -->
 
-### Text<!-- {{{ -->
-Component to set up a new text box and perform drawing to the terminal. Corresponds to the `--msgbox`, `--textbox`, `--tailbox` & `--tailboxbg` arguments in _Dialog/Whiptail_.
-> [!NOTE]
-> In Whiptail, the tailbox feature is emulated using a [program](#program) box.
-
-<details><summary><strong>Demo</strong> | Show example code: <a href="./demo/text.sh">text</a>, <a href="./demo/text_file.sh">text (file)</a>, <a href="./demo/text_file_follow.sh">text (file follow)</a></summary>
-
-![Demo text box (Dialog)](./demo/images/text/demo-text-dialog.jpg)
-![Demo text box (Whiptail)](./demo/images/text/demo-text-whiptail.jpg)
-</details>
-
-**List of commands:**
-<details><summary><code>text &lt;options&gt;</code></summary><blockquote>
-
-Sets up a new text box and draws it.
-Option             | Default                                        | Description
------------------- | :--------------------------------------------: | -----------
-`file=`            |                                                | <sup id="text-options-file"><sub>[#][text-options-file]</sub></sup> The path to a file whose contents to display in the text box. This takes precedence over the [`text`][box-common-options-text] option.
-`follow=`          | `false`                                        | <sup id="text-options-follow"><sub>[#][text-options-follow]</sub></sup> Whether to follow the contents of the file as in `tail -f` command.<br>In Dialog, long lines can be scrolled horizontally using vi-style `h` (left) and `l` (right), or arrow-keys. A `0` resets the scrolling. In Whiptail, long lines are wrapped by default.<br>Possible values: `true` (or `1`), `false` (or `0`).
-`inBackground=`    | `false`                                        | <sup id="text-options-in_background"><sub>[#][text-options-in_background]</sub></sup> Whether to follow the file in the background, as in `tail -f &` command, while displaying other widgets.<br>If no widgets are added using the `--and-widget` option, the display of the box will be postponed until another box is launched, which will then be used as widget.<br>NOTE: Dialog will perform all of the background widgets in the same process, polling for updates. You may use Tab to traverse between the widgets on the screen, and close them individually, e.g., by pressing ENTER.<br>Possible values: `true` (or `1`), `false` (or `0`).
-
-[<strong>See Common Options</strong>](#common-options)
-</blockquote></details>
-
----
-<!-- }}} -->
-
 ### Pause<!-- {{{ -->
 Component to set up a new pause box and perform drawing to the terminal. Corresponds to the `--pause` argument in Dialog.
 > [!NOTE]
@@ -955,6 +928,33 @@ Option                        | Default                                        |
 ----------------------------- | :--------------------------------------------: | -----------
 `filepath=`<br>`filepath+=`   | `""`                                           | <sup id="selector-options-filepath"><sub>[#][selector-options-filepath]</sub></sup> The path to a file or directory. If a file path is provided, the path contents will be displayed, and the filename will be pre-selected.<br>Corresponds to the `--fselect` argument in Dialog.<br>This option is used by default.
 `directory=`<br>`directory+=` | `""`                                           | <sup id="selector-options-directory"><sub>[#][selector-options-directory]</sub></sup> The path to a directory. If a file path is provided, the filename will be discarded, and the path contents will be displayed instead.<br>Corresponds to the `--dselect` argument in Dialog.<br>NOTE: only directories will be visible in the selector box when using this option.
+
+[<strong>See Common Options</strong>](#common-options)
+</blockquote></details>
+
+---
+<!-- }}} -->
+
+### Text<!-- {{{ -->
+Component to set up a new text box and perform drawing to the terminal. Corresponds to the `--msgbox`, `--textbox`, `--tailbox` & `--tailboxbg` arguments in _Dialog/Whiptail_.
+> [!NOTE]
+> In Whiptail, the tailbox feature is emulated using a [program](#program) box.
+
+<details><summary><strong>Demo</strong> | Show example code: <a href="./demo/text.sh">text</a>, <a href="./demo/text_file.sh">text (file)</a>, <a href="./demo/text_file_follow.sh">text (file follow)</a></summary>
+
+![Demo text box (Dialog)](./demo/images/text/demo-text-dialog.jpg)
+![Demo text box (Whiptail)](./demo/images/text/demo-text-whiptail.jpg)
+</details>
+
+**List of commands:**
+<details><summary><code>text &lt;options&gt;</code></summary><blockquote>
+
+Sets up a new text box and draws it.
+Option             | Default                                        | Description
+------------------ | :--------------------------------------------: | -----------
+`file=`            |                                                | <sup id="text-options-file"><sub>[#][text-options-file]</sub></sup> The path to a file whose contents to display in the text box. This takes precedence over the [`text`][box-common-options-text] option.
+`follow=`          | `false`                                        | <sup id="text-options-follow"><sub>[#][text-options-follow]</sub></sup> Whether to follow the contents of the file as in `tail -f` command.<br>In Dialog, long lines can be scrolled horizontally using vi-style `h` (left) and `l` (right), or arrow-keys. A `0` resets the scrolling. In Whiptail, long lines are wrapped by default.<br>Possible values: `true` (or `1`), `false` (or `0`).
+`inBackground=`    | `false`                                        | <sup id="text-options-in_background"><sub>[#][text-options-in_background]</sub></sup> Whether to follow the file in the background, as in `tail -f &` command, while displaying other widgets.<br>If no widgets are added using the `--and-widget` option, the display of the box will be postponed until another box is launched, which will then be used as widget.<br>NOTE: Dialog will perform all of the background widgets in the same process, polling for updates. You may use Tab to traverse between the widgets on the screen, and close them individually, e.g., by pressing ENTER.<br>Possible values: `true` (or `1`), `false` (or `0`).
 
 [<strong>See Common Options</strong>](#common-options)
 </blockquote></details>

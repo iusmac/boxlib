@@ -114,7 +114,9 @@ function formField() { # {{{
         case "$l_param" in
             type) l_type="$(__form_convert_field_types_to_bits "$l_value")";;
             title) l_title="$l_value";;
+            title+) l_title+="$l_value";;
             value) l_init_value="$l_value";;
+            value+) l_init_value+="$l_value";;
             width) l_width="$l_value";;
             maxlength) l_maxlength="$l_value";;
             titleX) l_titleX="$l_value";;

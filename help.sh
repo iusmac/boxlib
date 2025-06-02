@@ -374,11 +374,11 @@ Options:
         - 'readonly' (A non-editable field that displays information to the user, similar to a label)
         Defaults to: 'input'.
 
-    title=
+    title= title+=
         The title/label of the field.
         Defaults to an empty string.
 
-    value=
+    value= value+=
         The initial value of the field.
         Defaults to an empty string.
 

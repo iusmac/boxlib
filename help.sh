@@ -493,7 +493,7 @@ Options:
         Possible values: 'text', 'password'.
         Defaults to: 'text'.
 
-    value=
+    value= value+=
         The value used to initialize the input string.
         Defaults to an empty string.
 EOL

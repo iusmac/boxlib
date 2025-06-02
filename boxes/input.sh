@@ -26,6 +26,7 @@ function input() { # {{{
         case "$l_param" in
             type) __input_get_type "$l_value";;
             value) __INPUT["$l_param"]="$l_value";;
+            value+) __INPUT['value']+="$l_value";;
             *) l_box_args+=("$1")
         esac
         local l_code=$?

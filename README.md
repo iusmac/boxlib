@@ -586,10 +586,10 @@ Component to set up a new input box and perform drawing to the terminal. Corresp
 <details><summary><code>input &lt;options&gt;</code></summary><blockquote>
 
 Sets up a new input box and draws it.
-Option             | Default                                        | Description
------------------- | :--------------------------------------------: | -----------
-`type=`            | `text`                                         | <sup id="input-options-type"><sub>[#][input-options-type]</sub></sup> The type of the input box.<br>Possible values: `text`, `password`.
-`value=`           | `""`                                           | <sup id="input-options-value"><sub>[#][input-options-value]</sub></sup> The value used to initialize the input string.
+Option                | Default                                        | Description
+--------------------- | :--------------------------------------------: | -----------
+`type=`               | `text`                                         | <sup id="input-options-type"><sub>[#][input-options-type]</sub></sup> The type of the input box.<br>Possible values: `text`, `password`.
+`value=`<br>`value+=` | `""`                                           | <sup id="input-options-value"><sub>[#][input-options-value]</sub></sup> The value used to initialize the input string.
 
 [<strong>See Common Options</strong>](#common-options)
 </blockquote></details>

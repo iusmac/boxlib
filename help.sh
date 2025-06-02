@@ -1093,7 +1093,7 @@ Options:
         Example: 59.
         Defaults to: current second.
 
-   timeFormat=
+   timeFormat= timeFormat+=
         The format of the outputted time string.
         NOTE: in Dialog, the '--time-format' option will be used, which relies on 'strftime',
         whereas in Whiptail, the 'date' command will be used. So, there may be slight differences

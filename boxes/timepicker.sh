@@ -31,6 +31,7 @@ function timepicker() { # {{{
         l_value="${1#*=}"
         case "$l_param" in
             hour|minute|second|timeFormat) __TIMEPICKER["$l_param"]="$l_value";;
+            timeFormat+) __TIMEPICKER['timeFormat']+="$l_value";;
             forceInputBox) __assert_bool "$l_value" && __TIMEPICKER["$l_param"]="${__BOOLS["$l_value"]?}";;
             *) l_box_args+=("$1")
         esac

@@ -714,11 +714,11 @@ See $__BOXLIB_DIR/demo/menu.sh for an example.
 Usage: menuEntry <options>
 
 Options:
-    title=
+    title= title+=
         The title of the menu entry.
         Defaults to an empty string.
 
-    summary=
+    summary= summary+=
         The summary of the entry.
         Defaults to an empty string.
 

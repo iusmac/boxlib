@@ -107,7 +107,9 @@ function menuEntry() { # {{{
         l_value="${1#*=}"
         case "$l_param" in
             title) l_title="$l_value";;
+            title+) l_title+="$l_value";;
             summary) l_summary="$l_value";;
+            summary+) l_summary+="$l_value";;
             selected) __assert_bool "$l_value" && l_selected="${__BOOLS["$l_value"]?}";;
             callback) l_callback="$l_value";;
             *) __panic "menuEntry: Unrecognized argument: $1"

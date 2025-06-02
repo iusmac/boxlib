@@ -25,6 +25,7 @@ function edit() { # {{{
         l_value="${1#*=}"
         case "$l_param" in
             file|editor) __EDIT["$l_param"]="$l_value";;
+            file+|editor+) __EDIT["${l_param::-1}"]+="$l_value";;
             inPlace) __assert_bool "$l_value" && __EDIT["$l_param"]="${__BOOLS["$l_value"]?}";;
             text|text+) : Ignored;;
             *) l_box_args+=("$1")

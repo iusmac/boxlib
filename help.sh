@@ -288,10 +288,10 @@ See $__BOXLIB_DIR/demo/edit.sh for an example.
 $(__box_help 'edit')
 
 Options
-    file=
+    file= file+=
         The path to a file whose contents to edit.
 
-    editor=
+    editor= editor+=
         The text editor to use. If an empty string is provided, the "good" default text editor will
         be determined via Debian's 'sensible-editor' helper command. Otherwise, the editor from the
         \$EDITOR or \$VISUAL environment variables, or one of 'nano', 'nano-tiny', or 'vi'.

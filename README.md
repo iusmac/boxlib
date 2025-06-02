@@ -457,11 +457,11 @@ Component to set up a new edit box and perform drawing to the terminal. Correspo
 <details><summary><code>edit &lt;options&gt;</code></summary><blockquote>
 
 Sets up a new edit box and draws it.
-Option             | Default                                        | Description
------------------- | :--------------------------------------------: | -----------
-`file=`            |                                                | <sup id="edit-options-file"><sub>[#][edit-options-file]</sub></sup> The path to a file whose contents to edit.
-`editor=`          |                                                | <sup id="edit-options-editor"><sub>[#][edit-options-editor]</sub></sup> The text editor to use. If an empty string is provided, the "good" default text editor will be determined via Debian's `sensible-editor` helper command. Otherwise, the editor from the `$EDITOR` or `$VISUAL` environment variables, or one of `nano`, `nano-tiny`, or `vi`.<br>This option can be used with Dialog as well to replace the edit box.
-`inPlace=`         | `false`                                        | <sup id="edit-options-in_place"><sub>[#][edit-options-in_place]</sub></sup> Whether to edit the file in place after the box/editor exits.<br>Possible values: `true` (or `1`), `false` (or `0`).
+Option                  | Default                                        | Description
+----------------------- | :--------------------------------------------: | -----------
+`file=`<br>`file+=`     |                                                | <sup id="edit-options-file"><sub>[#][edit-options-file]</sub></sup> The path to a file whose contents to edit.
+`editor=`<br>`editor+=` |                                                | <sup id="edit-options-editor"><sub>[#][edit-options-editor]</sub></sup> The text editor to use. If an empty string is provided, the "good" default text editor will be determined via Debian's `sensible-editor` helper command. Otherwise, the editor from the `$EDITOR` or `$VISUAL` environment variables, or one of `nano`, `nano-tiny`, or `vi`.<br>This option can be used with Dialog as well to replace the edit box.
+`inPlace=`              | `false`                                        | <sup id="edit-options-in_place"><sub>[#][edit-options-in_place]</sub></sup> Whether to edit the file in place after the box/editor exits.<br>Possible values: `true` (or `1`), `false` (or `0`).
 
 [<strong>See Common Options</strong>](#common-options)
 </blockquote></details>

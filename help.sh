@@ -948,10 +948,8 @@ See $__BOXLIB_DIR/demo/mixedprogress.sh for an example.
 Usage: progressSet [<options>]
 
 Options:
-    text=
-    text+=
-        The new string to display inside the progress box. The '+=' operator will concatenate with
-        the previous 'text=' value (e.g., 'progressSet text='very long line1\n' text+='very long line2').
+    text= text+=
+        The new string to display inside the progress box.
 
     value=
         The new value to calculate the percentage of the progress bar. If 'total' option is not set,

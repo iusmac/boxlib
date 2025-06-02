@@ -74,6 +74,46 @@ function progress() { # {{{
     fi
 } # }}}
 
+# Performs adjustments on the current progress box.
+function progressSet() { # {{{
+    if [ $# -eq 1 ] && [ "$1" = 'help' ]; then
+        __progress_set_help
+        return 0
+    fi
+
+    __progress_assert_displaying
+
+    __progress_set "$@"
+    __progress_compute
+    if [ "${__PROGRESS['force-redraw']:-0}" -eq 1 ]; then
+        __progress_draw
+        __PROGRESS['force-redraw']=0
+    else
+        __progress_refresh
+    fi
+
+    if [ "${__PROGRESS['current-value']?}" -ge 100 ]; then
+        if [ "${__PROGRESS['sleep']?}" = 0 ]; then
+            # Allow for the last frame to be drawn before exiting the box
+            sleep .1
+        fi
+        __progress_exit
+    fi
+} # }}}
+
+# Manually causes the progress box to exit.
+function progressExit() { # {{{
+    if [ $# -gt 0 ]; then
+        if [ $# -eq 1 ] && [ "$1" = 'help' ]; then
+            __progress_exit_help
+            return 0
+        fi
+        __panic "progressExit: Unrecognized argument(s): $*."
+    fi
+    __progress_exit
+}
+# }}}
+
 # @hide
 function __progress_draw() { # {{{
     local l_text="${__BOX['text']?}"
@@ -121,68 +161,6 @@ function __progress_draw() { # {{{
     __PROGRESS['fd']=$l_fd
 }
 readonly -f __progress_draw
-# }}}
-
-# Performs adjustments on the current progress box.
-function progressSet() { # {{{
-    if [ $# -eq 1 ] && [ "$1" = 'help' ]; then
-        __progress_set_help
-        return 0
-    fi
-
-    __progress_assert_displaying
-
-    __progress_set "$@"
-    __progress_compute
-    if [ "${__PROGRESS['force-redraw']:-0}" -eq 1 ]; then
-        __progress_draw
-        __PROGRESS['force-redraw']=0
-    else
-        __progress_refresh
-    fi
-
-    if [ "${__PROGRESS['current-value']?}" -ge 100 ]; then
-        if [ "${__PROGRESS['sleep']?}" = 0 ]; then
-            # Allow for the last frame to be drawn before exiting the box
-            sleep .1
-        fi
-        __progress_exit
-    fi
-} # }}}
-
-# Manually causes the progress box to exit.
-function progressExit() { # {{{
-    if [ $# -gt 0 ]; then
-        if [ $# -eq 1 ] && [ "$1" = 'help' ]; then
-            __progress_exit_help
-            return 0
-        fi
-        __panic "progressExit: Unrecognized argument(s): $*."
-    fi
-    __progress_exit
-}
-# }}}
-
-# Function to gracefully exit the progress box and perform post-activities, such as cleanup.
-# @hide
-function __progress_exit() { # {{{
-    __progress_assert_displaying
-
-    # Save values before clean up
-    local l_sleep="${__PROGRESS['sleep']?}"
-    local -i l_pid="${__PROGRESS['pid']?}"
-
-    __progress_clean_up
-
-    # Wait for the progress box to terminate before exiting the script, as it should remove the
-    # alternate buffer to cleanup the screen, and restore TTY input settings
-    wait $l_pid 2>/dev/null
-
-    if [ "$l_sleep" != 0 ]; then
-        sleep "$l_sleep" || exit $?
-    fi
-}
-readonly -f __progress_exit
 # }}}
 
 # Function to set common progress options.
@@ -257,6 +235,28 @@ function __progress_set() { # {{{
     fi
 }
 readonly -f __progress_set
+# }}}
+
+# Function to gracefully exit the progress box and perform post-activities, such as cleanup.
+# @hide
+function __progress_exit() { # {{{
+    __progress_assert_displaying
+
+    # Save values before clean up
+    local l_sleep="${__PROGRESS['sleep']?}"
+    local -i l_pid="${__PROGRESS['pid']?}"
+
+    __progress_clean_up
+
+    # Wait for the progress box to terminate before exiting the script, as it should remove the
+    # alternate buffer to cleanup the screen, and restore TTY input settings
+    wait $l_pid 2>/dev/null
+
+    if [ "$l_sleep" != 0 ]; then
+        sleep "$l_sleep" || exit $?
+    fi
+}
+readonly -f __progress_exit
 # }}}
 
 # Generates the string of entries like in Dialog's mixed progress box.

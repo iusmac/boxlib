@@ -310,16 +310,16 @@ text text='This text box should be auto-sized to fit the contents' width='auto' 
 ```
 <br>
 
-Option             | Default                                        | Description
------------------- | :--------------------------------------------: | -----------
-`headerTitle=`     | `""`                                           | <sup id="config-options-header_title"><sub>[#][config-options-header_title]</sub></sup> The string to be displayed on the backdrop, at the top of the screen alongside the breadcrumbs.
-`rendererPath=`    | `dialog`                                       | <sup id="config-options-renderer_path"><sub>[#][config-options-renderer_path]</sub></sup> The absolute path to Dialog or Whiptail binary that will render the boxes.
-`rendererName=`    | `dialog`                                       | <sup id="config-options-renderer_name"><sub>[#][config-options-renderer_name]</sub></sup> The renderer name when renderer binary is specified.<br>Possible values: `dialog`, `whiptail`.
-`breadcrumbsDelim=`| ` > `                                          | <sup id="config-options-breadcrumbs_delim"><sub>[#][config-options-breadcrumbs_delim]</sub></sup> Set the breadcrumb delimiter string. Can by any length.
-`debug=`<br>`debug`| `/dev/null`                                    | <sup id="config-options-debug"><sub>[#][config-options-debug]</sub></sup> The file name where to write debug logs. This option takes precedence over the [`BOXLIB_DEBUG`][global-vars-debug] environment variable.<br>When no value is provided, will exit with `0` or `1` indicating the enabled debug state.<table><tr><th>Possible values</th><th></th></tr><tr><td>`stdout`</td><td>prints debug to the standard output</td></tr><tr><td>`stderr`</td><td>prints debug to the standard error</td></tr><tr><td>`<filename>`</td><td>writes debug to the given _filename_.</td></tr></table>
-`isDialogRenderer` |                                                | <sup id="config-options-is_dialog_renderer"><sub>[#][config-options-is_dialog_renderer]</sub></sup> Check whether Dialog is the default renderer. Will print `true` or `false` and also exit with `0` or `1`.
-`reset`            |                                                | <sup id="config-options-reset"><sub>[#][config-options-reset]</sub></sup> Reset the configuration to defaults.
-`help`             |                                                | <sup id="config-options-help"><sub>[#][config-options-help]</sub></sup> Print the usage screen and exit.
+Option                            | Default                                        | Description
+----------------------------------| :--------------------------------------------: | -----------
+`headerTitle=`<br>`headerTitle+=` | `""`                                           | <sup id="config-options-header_title"><sub>[#][config-options-header_title]</sub></sup> The string to be displayed on the backdrop, at the top of the screen alongside the breadcrumbs.
+`rendererPath=`                   | `dialog`                                       | <sup id="config-options-renderer_path"><sub>[#][config-options-renderer_path]</sub></sup> The absolute path to Dialog or Whiptail binary that will render the boxes.
+`rendererName=`                   | `dialog`                                       | <sup id="config-options-renderer_name"><sub>[#][config-options-renderer_name]</sub></sup> The renderer name when renderer binary is specified.<br>Possible values: `dialog`, `whiptail`.
+`breadcrumbsDelim=`               | ` > `                                          | <sup id="config-options-breadcrumbs_delim"><sub>[#][config-options-breadcrumbs_delim]</sub></sup> Set the breadcrumb delimiter string. Can by any length.
+`debug=`<br>`debug`               | `/dev/null`                                    | <sup id="config-options-debug"><sub>[#][config-options-debug]</sub></sup> The file name where to write debug logs. This option takes precedence over the [`BOXLIB_DEBUG`][global-vars-debug] environment variable.<br>When no value is provided, will exit with `0` or `1` indicating the enabled debug state.<table><tr><th>Possible values</th><th></th></tr><tr><td>`stdout`</td><td>prints debug to the standard output</td></tr><tr><td>`stderr`</td><td>prints debug to the standard error</td></tr><tr><td>`<filename>`</td><td>writes debug to the given _filename_.</td></tr></table>
+`isDialogRenderer`                |                                                | <sup id="config-options-is_dialog_renderer"><sub>[#][config-options-is_dialog_renderer]</sub></sup> Check whether Dialog is the default renderer. Will print `true` or `false` and also exit with `0` or `1`.
+`reset`                           |                                                | <sup id="config-options-reset"><sub>[#][config-options-reset]</sub></sup> Reset the configuration to defaults.
+`help`                            |                                                | <sup id="config-options-help"><sub>[#][config-options-help]</sub></sup> Print the usage screen and exit.
 </blockquote></details>
 <!-- }}} -->
 

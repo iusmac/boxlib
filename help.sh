@@ -224,7 +224,7 @@ NOTE:
 Usage: config <options> [<box-options>]
 
 Options:
-    headerTitle=
+    headerTitle= headerTitle+=
         The string to be displayed on the backdrop, at the top of the screen alongside the breadcrumbs.
         Defaults to an empty string.
 

@@ -76,6 +76,7 @@ function config() { # {{{
             debug) __config_set_debug "$l_value";;
             # Generic raw options
             headerTitle|breadcrumbsDelim) __CONFIG["$l_param"]="$l_value";;
+            headerTitle+) __CONFIG['headerTitle']+="$l_value";;
             *) __CONFIG_BOX_ARGS+=("$1")
         esac
         local l_code=$?

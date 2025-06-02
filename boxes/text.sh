@@ -36,6 +36,10 @@ function text() { # {{{
                 __TEXTBOX['type']='text'
                 __TEXTBOX["$l_param"]="$l_value"
                 ;;
+            file+)
+                __TEXTBOX['type']='text'
+                __TEXTBOX['file']+="$l_value"
+                ;;
             follow|inBackground)
                 __assert_bool "$l_value" && __TEXTBOX["$l_param"]="${__BOOLS["$l_value"]?}"
                 ;;

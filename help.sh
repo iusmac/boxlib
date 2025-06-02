@@ -1040,7 +1040,7 @@ See $__BOXLIB_DIR/demo/text_file_follow.sh for an example.
 $(__box_help 'text')
 
 Options:
-    file=
+    file= file+=
         The path to a file whose contents to display in the box.
         This takes precedence over the 'text' option.
 

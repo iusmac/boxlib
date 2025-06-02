@@ -6,16 +6,20 @@ function __box_help() { # {{{
     cat << EOL
 Usage: ${1?} <options>
 
+Tip: the '+=' operator will concatenate with the previous '<option>=' value, e.g.:
+    $1 \
+      title='My very long ' \
+      title+='box title'.
+
 Common options:
-    title=
+    title= title+=
         The string that is displayed at the top of the box.
         Same as using Whiptail/Dialog's '--title' option.
+
         Defaults to an empty string.
 
-    text=
-    text+=
-        The string that is displayed inside the box. The '+=' operator will concatenate with the
-        previous 'text=' value (e.g., '$1 text='very long line1\n' text+='very long line2').
+    text= text+=
+        The string that is displayed inside the box.
         Defaults to an empty string.
 
     width=

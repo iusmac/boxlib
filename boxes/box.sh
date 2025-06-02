@@ -138,7 +138,7 @@ function __box() { # {{{
             hideBreadcrumb | \
             scrollbar | \
             topleft) __assert_bool "$l_value" && __BOX["$l_param"]="${__BOOLS["$l_value"]?}";;
-            text+) __BOX['text']+="$l_value";;
+            title+|text+) __BOX["${l_param::-1}"]+="$l_value";;
             # Decimal value options
             timeout) __BOX["$l_param"]="$(__trim_decimals "$l_value")";;
             *) __panic "${FUNCNAME[1]}: Unrecognized argument: $l_arg"

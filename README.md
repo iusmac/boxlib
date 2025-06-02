@@ -348,15 +348,15 @@ with boxes and different ways to capture the result.
 
 #### Common options<!-- {{{ -->
 Each box may have its own specific options, but all boxes share the following common options:
-Option             | Default                                               | Description
------------------- | :---------------------------------------------------: | -----------
-`title=`           | `""`                                                  | <sup id="box-common-options-title"><sub>[#][box-common-options-title]</sub></sup> The string that is displayed at the top of the box.<br>Same as using Whiptail/Dialog's `--title` option.
-`text=`<br>`text+=`| `""`                                                  | <sup id="box-common-options-text"><sub>[#][box-common-options-text]</sub></sup> The string that is displayed inside the box. The `+=` operator will concatenate with the previous `text=` value (e.g., `info text='very long line1\n' text+='very long line2`).
-`width=`           | `auto`<br><sup>_also requires_ `height='auto'`</sup>  | <sup id="box-common-options-width"><sub>[#][box-common-options-width]</sub></sup> The width of the box.<br>Use `auto` or `0` to auto-size to fit the contents. Use `max` or `-1` to maximize.<br>Can be denoted using percent sign, (e.g., `50%`), to adjust dynamically based on the `tput cols` command.
-`height=`          | `auto`<br><sup>_also requires_ `width='auto'`</sup>   | <sup id="box-common-options-height"><sub>[#][box-common-options-height]</sub></sup> The height of the box.<br>Use `auto` or `0` to auto-size to fit the contents. Use `max` or `-1` to maximize.<br>Can be denoted using percent sign, (e.g., `50%`), to adjust dynamically based on the `tput lines` command.
-`callback=`        |                                                       | <sup id="box-common-options-callback"><sub>[#][box-common-options-callback]</sub></sup> The callback to receive the result(s) from the box. The callback will be:<ul><li>invoked as a local function if it ends with `()`</li><li>executed if it's a file with the "execute" bit set</li><li>sourced as a shell script file if it's none of the above</li></ul>In all cases, the callback should expect the result(s) as input parameters. When executed, the `$?` variable will contain the exit code from the renderer (Whiptail/Dialog).<br><br>**NOTE:**<ul><li>The callback execution will be _sandboxed_, i.e., it will run in a sub-shell. This ensures the interaction is isolated.</li><li>If the callback is a relative path to a file, then it will be searched starting from the working directory.<br>Also, the CWD will be changed to where the callback file is located before executing/sourcing it. To disable, set [`changeToCallbackDir=false`][box-common-options-change_to_callback_dir].</li></ul>
+Option                | Default                                               | Description
+--------------------- | :---------------------------------------------------: | -----------
+`title=`<br>`title+=` | `""`                                                  | <sup id="box-common-options-title"><sub>[#][box-common-options-title]</sub></sup> The string that is displayed at the top of the box.<br>Same as using Whiptail/Dialog's `--title` option.
+`text=`<br>`text+=`   | `""`                                                  | <sup id="box-common-options-text"><sub>[#][box-common-options-text]</sub></sup> The string that is displayed inside the box.
+`width=`              | `auto`<br><sup>_also requires_ `height='auto'`</sup>  | <sup id="box-common-options-width"><sub>[#][box-common-options-width]</sub></sup> The width of the box.<br>Use `auto` or `0` to auto-size to fit the contents. Use `max` or `-1` to maximize.<br>Can be denoted using percent sign, (e.g., `50%`), to adjust dynamically based on the `tput cols` command.
+`height=`             | `auto`<br><sup>_also requires_ `width='auto'`</sup>   | <sup id="box-common-options-height"><sub>[#][box-common-options-height]</sub></sup> The height of the box.<br>Use `auto` or `0` to auto-size to fit the contents. Use `max` or `-1` to maximize.<br>Can be denoted using percent sign, (e.g., `50%`), to adjust dynamically based on the `tput lines` command.
+`callback=`           |                                                       | <sup id="box-common-options-callback"><sub>[#][box-common-options-callback]</sub></sup> The callback to receive the result(s) from the box. The callback will be:<ul><li>invoked as a local function if it ends with `()`</li><li>executed if it's a file with the "execute" bit set</li><li>sourced as a shell script file if it's none of the above</li></ul>In all cases, the callback should expect the result(s) as input parameters. When executed, the `$?` variable will contain the exit code from the renderer (Whiptail/Dialog).<br><br>**NOTE:**<ul><li>The callback execution will be _sandboxed_, i.e., it will run in a sub-shell. This ensures the interaction is isolated.</li><li>If the callback is a relative path to a file, then it will be searched starting from the working directory.<br>Also, the CWD will be changed to where the callback file is located before executing/sourcing it. To disable, set [`changeToCallbackDir=false`][box-common-options-change_to_callback_dir].</li></ul>
 
-<details><summary align="center"><strong>See All Options</strong></summary>
+<details><summary align="center"><strong>See All Options</strong></summary><blockquote>
 
 Option                       | Default                                        | Description
 ---------------------------- | :--------------------------------------------: | -----------
@@ -380,6 +380,14 @@ Option                       | Default                                        | 
 `topleft=`                   | `false`                                        | <sup id="box-common-options-topleft"><sub>[#][box-common-options-topleft]</sub></sup> Whether to put window in top-left corner.<br>Same as using Whiptail/Dialog's `--topleft/--begin 0 0` option.<br>Possible values: `true` (or `1`), `false` (or `0`).
 `help`                       |                                                | <sup id="box-common-options-help"><sub>[#][box-common-options-help]</sub></sup> Print the usage screen and exit.
 </blockquote></details>
+
+> [!TIP]
+> The `+=` operator will concatenate with the previous `<option>=` value, e.g.,
+> ```bash
+> info \
+>   title='My very long ' \
+>   title+='box title'
+> ```
 
 ---
 <!-- }}} -->

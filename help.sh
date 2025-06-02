@@ -864,7 +864,7 @@ See $__BOXLIB_DIR/demo/program.sh for an example.
 $(__box_help 'program')
 
 Options:
-    command=
+    command= command+=
         The command(s) to execute via 'sh -c <command>' whose output will be displayed in the box.
         If omitted, then the output will be read from stdin.
 

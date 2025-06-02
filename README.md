@@ -828,10 +828,10 @@ Sets up a new program box that will display the output of a command. Corresponds
 <details><summary><code>program &lt;options&gt;</code></summary><blockquote>
 
 Sets up a new box that will display the output of a command.
-Option             | Default                                        | Description
------------------- | :--------------------------------------------: | -----------
-`command=`         |                                                | <sup id="program-options-command"><sub>[#][program-options-command]</sub></sup> The command(s) to execute via `sh -c <command>` whose output will be displayed in the box.<br>If omitted, then the output will be read from _stdin_.
-`hideOk=`          | `false`                                        | <sup id="program-options-hide_ok"><sub>[#][program-options-hide_ok]</sub></sup> Whether to hide the `OK` button after the command has completed.<br>Possible values: `true` (or `1`), `false` (or `0`).
+Option                    | Default                                        | Description
+--------------------------| :--------------------------------------------: | -----------
+`command=`<br>`command+=` |                                                | <sup id="program-options-command"><sub>[#][program-options-command]</sub></sup> The command(s) to execute via `sh -c <command>` whose output will be displayed in the box.<br>If omitted, then the output will be read from _stdin_.
+`hideOk=`                 | `false`                                        | <sup id="program-options-hide_ok"><sub>[#][program-options-hide_ok]</sub></sup> Whether to hide the `OK` button after the command has completed.<br>Possible values: `true` (or `1`), `false` (or `0`).
 </details>
 
 ---

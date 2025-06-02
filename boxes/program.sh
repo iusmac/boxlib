@@ -29,6 +29,7 @@ function program() { # {{{
             text+) l_text+="$l_value";;
             callback) l_callback="$l_value";;
             command) __PROGRAM["$l_param"]="$l_value";;
+            command+) __PROGRAM['command']+="$l_value";;
             hideOk) __assert_bool "$l_value" && __PROGRAM["$l_param"]="${__BOOLS["$l_value"]?}";;
             *)
                 [ "$l_param" = 'height' ] && l_box_size[0]="$l_value"

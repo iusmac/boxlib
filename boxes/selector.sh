@@ -122,12 +122,13 @@ function selector() { # {{{
             if [ "${__SELECTOR['path']?}" != '/' ]; then # show dot-dot unless root is reached
                 menuEntry title='../'
             fi
-            # Do not process the '.' and '..' at this point
-            unset 'l_files[0]' 'l_files[1]'
+            # Do not process the '.' and '..' at this point, if matched by the glob pattern
+            local l_total=${#l_files[@]}
+            case "${l_files[0]-}" in .|./) unset 'l_files[0]' 'l_files[1]';; esac
 
             # Add directories first
-            local i l_total=${#l_files[@]} l_last_match=''
-            for ((i = 2; i < l_total + 2; i++)); do
+            local i l_last_match=''
+            for ((i = l_total - ${#l_files[@]}; i < l_total; i++)); do
                 local l_file="${l_files[i]}"
                 if [ "$l_type" = 'fselect' ]; then
                     if [ ! -d "$l_file" ]; then
